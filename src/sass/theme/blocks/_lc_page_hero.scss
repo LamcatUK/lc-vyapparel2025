@@ -1,0 +1,42 @@
+.page-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  justify-content: center;
+  min-height: 500px;
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      hsl(var(--col-black-hsl) / 0.8) 100%,
+      transparent 100%
+    );
+    @media (min-width: 992px) {
+      background: linear-gradient(
+        to right,
+        var(--col-black) 25%,
+        transparent 100%
+      );
+    }
+    z-index: 0;
+  }
+
+  &__content {
+    z-index: 1;
+    color: var(--col-white);
+  }
+}

@@ -1,0 +1,31 @@
+.testimonial {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 1rem;
+  grid-template-areas: "icon text" "icon author";
+  background-color: var(--col-secondary-100);
+
+  border-radius: var(--radius-base);
+  padding: 1rem;
+  box-shadow: var(--shadow-noninteractive);
+  &__icon {
+    grid-area: icon;
+    font-size: 48px;
+    color: var(--col-accent-400);
+    align-content: flex-start;
+    line-height: 1;
+  }
+  &__text {
+    grid-area: text;
+    font-family: var(--ff-accent);
+    font-size: var(--fs-subtle);
+    font-weight: var(--fw-accent);
+    line-height: var(--lh-normal);
+  }
+  &__author {
+    grid-area: author;
+    font-family: var(--ff-body);
+    font-size: var(--fs-ui);
+    font-weight: var(--fw-ui);
+  }
+}

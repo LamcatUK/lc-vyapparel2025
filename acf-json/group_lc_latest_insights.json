@@ -1,0 +1,23 @@
+{
+  "key": "group_lc_latest_insights",
+  "title": "LC Latest Insights",
+  "fields": [
+    {
+      "key": "field_lc_latest_insights_title",
+      "label": "LC Latest Insights",
+      "name": "title",
+      "type": "message"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/lc-latest-insights"
+      }
+    ]
+  ],
+  "active": 1,
+  "description": ""
+}

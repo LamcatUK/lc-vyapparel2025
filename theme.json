@@ -1,0 +1,82 @@
+{
+  "version": 2,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        { "slug": "white", "name": "White", "color": "hsl(0 0% 100%)" },
+        { "slug": "black", "name": "Black", "color": "hsl(0 0% 0%)" },
+        {
+          "slug": "neutral-900",
+          "name": "Neutral 900",
+          "color": "hsl(90 9% 16%)"
+        },
+        {
+          "slug": "secondary-900",
+          "name": "Secondary 900",
+          "color": "hsl(24 7% 40%)"
+        },
+        {
+          "slug": "secondary-400",
+          "name": "Secondary 400",
+          "color": "hsl(32 14% 73%)"
+        },
+        {
+          "slug": "secondary-100",
+          "name": "Secondary 100",
+          "color": "hsl(30 27% 95%)"
+        },
+        {
+          "slug": "accent-400",
+          "name": "Accent 400",
+          "color": "hsl(39 62% 54%)"
+        }
+      ],
+      "custom": false,
+      "defaultPalette": false
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "slug": "heading",
+          "name": "Heading (Barlow)",
+          "fontFamily": "Barlow, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif"
+        },
+        {
+          "slug": "body",
+          "name": "Body (Inter)",
+          "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent (Merriweather)",
+          "fontFamily": "Merriweather, ui-serif, Georgia, Cambria, Times New Roman, Times, serif"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "display", "name": "Display", "size": "48px" },
+        { "slug": "h2", "name": "H2", "size": "36px" },
+        { "slug": "h3", "name": "H3", "size": "24px" },
+        { "slug": "subtle", "name": "Subtle", "size": "22px" },
+        { "slug": "body", "name": "Body", "size": "18px" },
+        { "slug": "meta", "name": "Meta", "size": "16px" },
+        { "slug": "ui", "name": "UI", "size": "14px" }
+      ]
+    }
+  },
+  "styles": {
+    "typography": {
+      "fontFamily": "var(--ff-body)",
+      "lineHeight": "var(--lh-normal)"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--ff-heading)",
+          "fontWeight": "600",
+          "lineHeight": "var(--lh-tight)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+header {
+  background-color: var(--col-neutral-900);
+  transition: var(--transition);
+
+  font-family: var(--ff-heading);
+
+  .navbar-toggler {
+    i {
+      color: var(--col-accent-400);
+    }
+  }
+
+  .contact-info {
+    font-size: var(--fs-ui);
+    color: var(--col-white);
+  }
+
+  .navbar-nav {
+    margin-block: 0;
+  }
+
+  a,
+  a.nav-link {
+    color: var(--col-white);
+    font-size: var(--fs-ui);
+    font-weight: var(--fw-ui);
+    transition: var(--transition);
+    display: inline-block;
+    text-decoration: none;
+    padding: 0;
+    @media (min-width: 992px) {
+      &:hover {
+        color: var(--col-accent-400);
+        text-decoration: none;
+      }
+    }
+    &:focus {
+      color: var(--col-accent-400);
+      text-decoration: none;
+    }
+  }
+
+  .logo-container {
+    max-width: 240px;
+    margin-right: 1rem;
+  }
+  .logo {
+    background-image: url(../img/harrier-gates--wo.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    aspect-ratio: 963 / 183;
+    width: 237px;
+    height: 45px;
+    max-width: 100%;
+  }
+
+  .current_page_item > .nav-link,
+  .current_page_parent > .nav-link,
+  .dropdown.current-page-ancestor > .nav-link,
+  .dropdown.current-menu-item > .nav-link {
+    color: var(--col-accent-400);
+    font-weight: var(--fw-ui);
+  }
+}

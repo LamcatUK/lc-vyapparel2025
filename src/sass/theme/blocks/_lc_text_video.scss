@@ -1,0 +1,7 @@
+.text-video {
+  &__vimeo {
+    border-radius: var(--radius-base);
+    box-shadow: var(--shadow-noninteractive);
+    overflow: hidden;
+  }
+}

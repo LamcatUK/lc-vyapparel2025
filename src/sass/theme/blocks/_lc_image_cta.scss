@@ -1,0 +1,33 @@
+.image-cta {
+  position: relative;
+  padding-block: 10rem;
+  overflow: hidden;
+  isolation: isolate;
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+  }
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--col-black);
+    opacity: 0.6;
+    z-index: 0;
+  }
+  &__content {
+    color: var(--col-white);
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  &__description {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-snug);
+    text-wrap: balance;
+  }
+}
