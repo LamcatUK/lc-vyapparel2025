@@ -4,7 +4,7 @@
  *
  * This file contains the code to register custom post types for the theme.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 /**

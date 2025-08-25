@@ -1,46 +1,34 @@
-/* barlow-600 - latin */
+/* avenir-500 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Barlow";
+  font-family: "Avenir";
   font-style: normal;
-  font-weight: 600;
-  src: url("../fonts/barlow-v12-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-weight: 500;
+  src: url("../fonts/AvenirBook.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-
-/* merriweather-300italic - latin */
+/* avenir-300 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Merriweather";
-  font-style: italic;
+  font-family: "Avenir";
+  font-style: normal;
   font-weight: 300;
-  src: url("../fonts/merriweather-v32-latin-300italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("../fonts/AvenirLight.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-
-/* inter-200 - latin */
+/* gotham-300 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Inter";
+  font-family: "Gotham";
   font-style: normal;
-  font-weight: 200;
-  src: url("../fonts/inter-v19-latin-200.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-weight: 300;
+  src: url("../fonts/GothamLight.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-
-/* inter-regular - latin */
+/* gotham-700 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Inter";
+  font-family: "Gotham";
   font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/inter-v19-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-600 - latin */
-@font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  src: url("../fonts/inter-v19-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  font-weight: 700;
+  src: url("../fonts/GothamBold.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 :root {
@@ -56,145 +44,132 @@ html {
   font-size: 100%;
 } /* 16px */
 body {
-  font-family: var(--ff-body);
-  font-weight: var(--fw-body);
-  font-size: var(--fs-body);
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-500);
   line-height: var(--lh-normal);
-  color: var(--col-neutral-900);
-  background: var(--col-secondary-100);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings */
-h1,
-.h1 {
-  font-family: var(--ff-heading);
-  font-weight: var(--fw-heading);
+.fw-bold,
+strong {
+  font-weight: var(--fw-bold) !important;
+}
+
+.ff-gotham {
+  font-family: var(--ff-sans-primary) !important;
+}
+
+/* helpers you can reuse anywhere */
+.u-eyebrow {
+  font-family: var(--ff-sans-primary);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-wide);
+  text-transform: none;
+  text-wrap: balance;
+  & > span {
+    color: var(--col-accent-400);
+    font-weight: var(--fw-bold);
+  }
+}
+
+.u-display {
+  font-family: var(--ff-sans-primary);
+  font-weight: var(--fw-bold);
   font-size: var(--fs-display);
   line-height: var(--lh-tight);
-  letter-spacing: -0.01em;
   text-wrap: balance;
+  & > span {
+    color: var(--col-accent-400);
+  }
 }
 
-h2,
-.h2 {
-  font-family: var(--ff-heading);
-  font-weight: var(--fw-heading);
-  font-size: var(--fs-h2);
+.u-display--light {
+  font-family: var(--ff-sans-primary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-display);
   line-height: var(--lh-tight);
-  letter-spacing: -0.005em;
+  text-wrap: balance;
+  & > span {
+    font-weight: var(--fw-light);
+    color: var(--col-accent-400);
+  }
+}
+
+.u-headline {
+  font-family: var(--ff-sans-primary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-headline);
+  line-height: var(--lh-tight);
+  text-wrap: balance;
+  & > span {
+    color: var(--col-accent-400);
+  }
+}
+
+.u-title-lg {
+  font-family: var(--ff-sans-primary);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-title-lg);
+  line-height: var(--lh-title);
+  text-wrap: balance;
+  & > span {
+    color: var(--col-accent-400);
+    font-weight: var(--fw-bold);
+  }
+}
+
+.u-subtitle {
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-subtitle);
+  line-height: var(--lh-copy);
+  text-wrap: balance;
+  & > span {
+    color: var(--col-accent-400);
+    font-weight: var(--fw-bold);
+  }
+}
+
+.u-body-lg {
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-copy);
   text-wrap: balance;
 }
 
-h3,
-.h3 {
-  font-family: var(--ff-heading);
-  font-weight: var(--fw-heading);
-  font-size: var(--fs-h3);
-  line-height: var(--lh-snug);
-  text-wrap: balance;
+.u-body {
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-light);
+  font-size: 1rem;
+  line-height: var(--lh-copy);
 }
 
-h4,
-.h4 {
-  font-family: var(--ff-heading);
-  font-weight: var(--fw-heading);
-  font-size: var(--fs-subtle);
-  line-height: var(--lh-snug);
-  text-wrap: balance;
+.u-sm {
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-light);
+  font-size: 0.8rem;
+  line-height: var(--lh-copy);
 }
 
-/* Subtle lead-ins / quotes */
-.subtle {
-  font-family: var(--ff-accent);
-  font-weight: var(--fw-accent);
-  font-style: italic;
-  font-size: var(--fs-subtle);
-  line-height: var(--lh-snug);
-  text-wrap: balance;
+.u-button {
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-button);
+  line-height: 1;
 }
 
-/* Meta / supporting text */
-.meta {
-  font-family: var(--ff-body);
-  font-weight: var(--fw-meta);
-  font-size: var(--fs-meta);
-  line-height: var(--lh-normal);
-  color: var(--col-secondary-900);
-}
-
-/* Small UI labels (buttons, badges) */
-.ui {
-  font-family: var(--ff-body);
-  font-weight: var(--fw-ui);
-  font-size: var(--fs-ui);
-  line-height: var(--lh-normal);
-  letter-spacing: 0.02em;
-}
-
-/* Links */
-a {
+.col-accent {
   color: var(--col-accent-400);
-  text-decoration: none;
-}
-a:hover {
-  color: var(--col-accent-400-hover);
-  text-decoration: underline;
-}
-a:focus-visible {
-  outline: 2px solid var(--col-accent-400);
-  outline-offset: 2px;
 }
 
-/* Media rhythm */
-p,
-ul,
-ol,
-blockquote,
-figure {
-  margin-block: 0.75em;
+.boxed {
+  display: inline-block;
+  border: 2px solid var(--col-accent-400);
+  padding: 1rem 1.5rem 0.75rem 1.5rem;
 }
-
-.w-constrained-md {
-  max-width: 72ch;
-  text-wrap: balance;
-}
-
-.fs-body {
-  font-size: var(--fs-body);
-}
-.fs-h3 {
-  font-size: var(--fs-h3);
-}
-.fs-sm,
-.fs-ui {
-  font-size: var(--fs-ui);
-}
-.fs-subtle {
-  font-size: var(--fs-subtle);
-}
-
-.fw-thin {
-  font-weight: var(--fw-meta);
-}
-.fw-regular {
-  font-weight: var(--fw-body);
-}
-.fw-heading {
-  font-weight: var(--fw-heading);
-}
-
-// h1,
-// .h1 {
-//   margin-block: 0.6em 0.4em;
-// }
-// h2,
-// .h2 {
-//   margin-block: 1.2em 0.5em;
-// }
-// h3,
-// .h3 {
-//   margin-block: 1.2em 0.4em;
-// }

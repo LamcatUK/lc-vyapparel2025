@@ -1,10 +1,11 @@
 // Add your custom JS here.
 AOS.init({
-  easing: 'ease-out',
+  easing: "ease-out",
   once: true,
   duration: 600,
 });
 
+/*
 (function() {
   // Hide header on scroll
   var doc = document.documentElement;
@@ -51,7 +52,7 @@ AOS.init({
   window.addEventListener('scroll', checkScroll);
 }
 )();
-
+*/
 
 /*
 
@@ -72,4 +73,3 @@ AOS.init({
   });
 
 */
-

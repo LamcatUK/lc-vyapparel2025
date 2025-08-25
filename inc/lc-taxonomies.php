@@ -4,7 +4,7 @@
  *
  * This file defines and registers custom taxonomies such as 'Teams' and 'Offices'.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 use function Avifinfo\read;

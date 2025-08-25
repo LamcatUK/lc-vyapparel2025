@@ -5,7 +5,7 @@
  * A visual reference page for theme colours, typography, buttons,
  * grid layout, blocks, and utility classes.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

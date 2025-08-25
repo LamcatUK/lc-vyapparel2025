@@ -1,0 +1,87 @@
+// _lc-panel.scss
+
+.lc-panel {
+  position: relative;
+  min-height: 100svh; // mobile-safe full height
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  // background image
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: var(--fx, 50%) var(--fy, 50%);
+    /* Allow JS/PHP to set --bg to the url(...) value, fallback to none */
+    background-image: var(--bg, none);
+    z-index: 0;
+  }
+
+  // subtle dark overlay to improve contrast against background images.
+  /*
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+    z-index: 1;
+    pointer-events: none;
+  }
+  */
+
+  // content container
+  > .container {
+    position: relative;
+    z-index: 2; // above overlay
+    text-align: center;
+    color: var(--panel-text, #fff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 5rem 1.25rem;
+  }
+
+  &__logo {
+    width: 95px;
+    height: 93px;
+  }
+
+  &__scroll-cue {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    opacity: 0.95;
+
+    img {
+      display: block;
+      width: 2.25rem;
+      height: auto;
+      animation: bounce 2s infinite;
+    }
+  }
+
+  &__vy {
+    img {
+      display: block;
+      width: 450px;
+      height: auto;
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translate(-50%, 0);
+    }
+    50% {
+      transform: translate(-50%, 8px);
+    }
+  }
+}

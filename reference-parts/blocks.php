@@ -5,7 +5,7 @@
  * Displays a preview and summary of all registered ACF blocks, including a cleaned-up
  * description extracted from each block template's file doc block.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

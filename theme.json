@@ -6,30 +6,14 @@
       "palette": [
         { "slug": "white", "name": "White", "color": "hsl(0 0% 100%)" },
         { "slug": "black", "name": "Black", "color": "hsl(0 0% 0%)" },
-        {
-          "slug": "neutral-900",
-          "name": "Neutral 900",
-          "color": "hsl(90 9% 16%)"
-        },
-        {
-          "slug": "secondary-900",
-          "name": "Secondary 900",
-          "color": "hsl(24 7% 40%)"
-        },
-        {
-          "slug": "secondary-400",
-          "name": "Secondary 400",
-          "color": "hsl(32 14% 73%)"
-        },
-        {
-          "slug": "secondary-100",
-          "name": "Secondary 100",
-          "color": "hsl(30 27% 95%)"
-        },
+        { "slug": "primary", "name": "Primary", "color": "#27383a" },
+        { "slug": "dark", "name": "Dark", "color": "#222222" },
+        { "slug": "darkest", "name": "Darkest", "color": "#4a4a4a" },
+        { "slug": "light", "name": "Light", "color": "#f2f2f2" },
         {
           "slug": "accent-400",
           "name": "Accent 400",
-          "color": "hsl(39 62% 54%)"
+          "color": "hsl(188 81% 67%)"
         }
       ],
       "custom": false,
@@ -39,41 +23,54 @@
       "fontFamilies": [
         {
           "slug": "heading",
-          "name": "Heading (Barlow)",
-          "fontFamily": "Barlow, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif"
+          "name": "Heading (Gotham / Montserrat)",
+          "fontFamily": "Gotham, Montserrat, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica Neue, Arial, sans-serif"
         },
         {
           "slug": "body",
-          "name": "Body (Inter)",
-          "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif"
-        },
-        {
-          "slug": "accent",
-          "name": "Accent (Merriweather)",
-          "fontFamily": "Merriweather, ui-serif, Georgia, Cambria, Times New Roman, Times, serif"
+          "name": "Body (Avenir / Inter)",
+          "fontFamily": "Avenir, Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica Neue, Arial, sans-serif"
         }
       ],
       "fontSizes": [
-        { "slug": "display", "name": "Display", "size": "48px" },
-        { "slug": "h2", "name": "H2", "size": "36px" },
-        { "slug": "h3", "name": "H3", "size": "24px" },
-        { "slug": "subtle", "name": "Subtle", "size": "22px" },
-        { "slug": "body", "name": "Body", "size": "18px" },
-        { "slug": "meta", "name": "Meta", "size": "16px" },
-        { "slug": "ui", "name": "UI", "size": "14px" }
+        {
+          "slug": "display",
+          "name": "Display",
+          "size": "clamp(2.5rem, 6vw + 1rem, 9.525rem)"
+        },
+        {
+          "slug": "h2",
+          "name": "H2",
+          "size": "clamp(2.25rem, 4.8vw + 0.75rem, 7.146rem)"
+        },
+        {
+          "slug": "h3",
+          "name": "H3",
+          "size": "clamp(1.5rem, 3.4vw + 0.5rem, 4.171rem)"
+        },
+        {
+          "slug": "subtle",
+          "name": "Subtle",
+          "size": "clamp(1.25rem, 2.8vw + 0.5rem, 3.57rem)"
+        },
+        {
+          "slug": "body",
+          "name": "Body",
+          "size": "clamp(1rem, 2vw + 0.5rem, 2.678rem)"
+        }
       ]
     }
   },
   "styles": {
     "typography": {
-      "fontFamily": "var(--ff-body)",
-      "lineHeight": "var(--lh-normal)"
+      "fontFamily": "var(--ff-sans-secondary)",
+      "lineHeight": "var(--lh-copy)"
     },
     "elements": {
       "heading": {
         "typography": {
-          "fontFamily": "var(--ff-heading)",
-          "fontWeight": "600",
+          "fontFamily": "var(--ff-sans-primary)",
+          "fontWeight": "var(--fw-bold)",
           "lineHeight": "var(--lh-tight)"
         }
       }

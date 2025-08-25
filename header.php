@@ -4,7 +4,7 @@
  *
  * Displays all of the <head> section and everything up till <div id="content">
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 // Exit if accessed directly.
@@ -24,18 +24,6 @@ if ( session_status() === PHP_SESSION_NONE ) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1">
     <link rel="preload"
         href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/barlow-v12-latin-600.woff2' ); ?>"
-        as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload"
-        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/inter-v19-latin-200.woff2' ); ?>"
-        as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload"
-        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/inter-v19-latin-regular.woff2' ); ?>"
-        as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload"
-        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/inter-v19-latin-600.woff2' ); ?>"
-        as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload"
-        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/merriweather-v32-latin-300italic.woff2' ); ?>"
         as="font" type="font/woff2" crossorigin="anonymous">
     <?php
     if ( ! is_user_logged_in() ) {
@@ -110,39 +98,3 @@ if ( session_status() === PHP_SESSION_NONE ) {
     	}
 	}
 	?>
-<header id="wrapper-navbar" class="fixed-top p-0">
-	<nav class="navbar navbar-expand-md">
-		<div class="container gap-4">
-            <div class="d-flex justify-content-between w-100 w-lg-auto align-items-center py-3 py-lg-0">
-                <div class="logo-container"><a href="/" class="logo navbar-brand" aria-label="Harrier Gates Homepage"></a></div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <div class="w-100 d-flex flex-column justify-content-lg-between align-items-lg-center">
-                    <!-- Contact Details (Hidden on Mobile) -->
-                    <div class="contact-info d-none d-lg-flex gap-3 w-100 justify-content-end align-items-center pb-2">
-                        <span><i class="fa-regular fa-envelope"></i> <?= do_shortcode( '[contact_email]' ); ?></span>
-                        <span><i class="fa-solid fa-phone"></i> <?= do_shortcode( '[contact_phone]' ); ?></span>
-                    </div>
-                    <!-- Navigation -->
-                    <?php
-                    wp_nav_menu(
-                        array(
-                            'theme_location' => 'primary_nav',
-                            'container'      => false,
-                            'menu_class'     => 'navbar-nav w-100 justify-content-between',
-                            'fallback_cb'    => '',
-                            'depth'          => 3,
-                            'walker'         => new Understrap_WP_Bootstrap_Navwalker(),
-                        )
-                    );
-                    ?>
-                </div>
-            </div>
-		</div>
-	</nav>
-</header>

@@ -4,7 +4,7 @@
  *
  * Demonstrates Bootstrap 5 grid usage.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

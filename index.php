@@ -2,7 +2,7 @@
 /**
  * Template for displaying the blog index page.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -27,12 +27,6 @@ get_header();
 			<div class="row h-100 align-items-center">
 				<div class="col-md-8 col-lg-6 col-xl-4 page-hero__content">
 					<h1>News &amp; Insights</h1>
-					<p class="subtitle">Expert advice, industry updates, and company news.</p>
-					<a href="/request-survey/" class="btn btn--primary mb-4">Request a Survey</a>
-					<div class="d-flex gap-4 justify-content-start">
-						<img src="<?= esc_url( get_stylesheet_directory_uri() . '/img/gate-safe-logo.webp' ); ?>" class="mb-4" width="118" height="74">
-						<img src="<?= esc_url( get_stylesheet_directory_uri() . '/img/safecontractor-sticker.webp' ); ?>" class="mb-4" width="74" height="74">
-					</div>
 				</div>
 			</div>
 		</div>

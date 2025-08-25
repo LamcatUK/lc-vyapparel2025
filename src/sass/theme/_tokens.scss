@@ -13,87 +13,54 @@ $col-light: #f2f2f2;
 
   --col-black-hsl: 0 0% 0%; /* #000000 – pure black */
 
-  --col-neutral-900-hsl: 90 9% 16%; /* #2B2624 – charcoal */
-  --col-neutral-900: hsl(var(--col-neutral-900-hsl));
-
-  // --col-black: hsl(var(--col-neutral-900-hsl));
   --col-black: hsl(var(--col-black-hsl));
 
-  --col-secondary-100-hsl: 30 27% 95%; /* #F5F2EE – off-white */
-  --col-secondary-100: hsl(var(--col-secondary-100-hsl));
-
-  --col-secondary-400-hsl: 32 14% 73%; /* #C2B8AC – soft taupe */
-  --col-secondary-400: hsl(var(--col-secondary-400-hsl));
-
-  --col-secondary-900-hsl: 24 7% 40%; /* #6E655F – warm stone */
-  --col-secondary-900: hsl(var(--col-secondary-900-hsl));
-
-  --col-accent-400-hsl: 39 62% 54%; /* #D79C3F – golden ochre */
+  --col-accent-400-hsl: 188 81% 67%; /* #65ddef – cyan */
   --col-accent-400: hsl(var(--col-accent-400-hsl));
-
-  /* Accent variants */
-  --col-accent-400-hover-hsl: 39 62% 47%; /* darker by ~7% lightness */
-  --col-accent-400-hover: hsl(var(--col-accent-400-hover-hsl));
-
-  --col-accent-400-active-hsl: 39 62% 42%; /* darker by ~12% lightness */
-  --col-accent-400-active: hsl(var(--col-accent-400-active-hsl));
 
   /* =========================
      TYPOGRAPHY (families/weights)
-     ========================= */
-  --ff-heading:
-    "Barlow", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  --ff-body:
-    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  --ff-accent:
-    "Merriweather", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    ========================= */
+  --ff-sans-primary:
+    "Gotham", "Montserrat", system-ui, -apple-system, "Segoe UI", Arial,
+    sans-serif;
+  --ff-sans-secondary:
+    "Avenir", "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 
-  --fw-heading: 600; /* Semibold */
-  --fw-body: 400; /* Regular */
-  --fw-meta: 200; /* Thin */
-  --fw-ui: 600; /* Semibold */
-  --fw-accent: 300; /* Light Italic */
+  --fw-light: 300;
+  --fw-medium: 500;
+  --fw-bold: 700;
 
-  --lh-tight: 1.1;
-  --lh-snug: 1.25;
-  --lh-normal: 1.5;
+  /* line-heights */
+  --lh-tight: 1.05;
+  --lh-title: 1.15;
+  --lh-copy: 1.45;
+
+  /* letter-spacing */
+  --ls-normal: 0;
+  --ls-wide: 0.04em;
 
   /* =========================
      TYPOGRAPHY (responsive sizes)
      ========================= */
-  --fs-display: clamp(2.25rem, 1.2rem + 2.5vw, 3rem); /* 36→48px */
-  --fs-h2: clamp(1.75rem, 1.1rem + 1.5vw, 2.25rem); /* 28→36px */
-  --fs-h3: clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem); /* 20→24px */
-  --fs-subtle: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem); /* 18→22px */
-  --fs-body: clamp(1rem, 0.95rem + 0.4vw, 1.125rem); /* 16→18px */
-  --fs-meta: clamp(1rem, 0.98rem + 0.2vw, 1.0625rem); /* 16→17px */
-  --fs-ui: clamp(0.875rem, 0.82rem + 0.3vw, 0.9375rem); /* 14→15px */
-
-  /* =========================
-     RADIUS
-     ========================= */
-  --radius-base: 8px; /* Spec default for interactive & container elements */
-
-  /* =========================
-     SHADOWS
-     ========================= */
-
-  /* Close & tight – "active" */
-  --shadow-active: 0 1px 2px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
-
-  /* Mid & airy – "non-interactive" */
-  --shadow-noninteractive:
-    0 4px 6px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
-
-  /* Out & clear – "interactive" */
-  --shadow-interactive:
-    0 8px 12px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
+  --fs-900: clamp(2.25rem, 5.2vw + 0.9rem, 7rem); /* max 7rem */
+  --fs-800: clamp(2rem, 4.2vw + 0.7rem, 4rem); /* max 4rem */
+  --fs-700: clamp(1.35rem, 3vw + 0.45rem, 3rem); /* max 3rem */
+  --fs-650: clamp(1.125rem, 2.5vw + 0.45rem, 2.8rem); /* max 2.8rem */
+  --fs-600: clamp(1rem, 2.2vw + 0.45rem, 2.4rem); /* max 2.4rem */
+  --fs-500: clamp(0.95rem, 1.75vw + 0.45rem, 1.7rem); /* max 1.7rem */
+  --fs-400: 1rem;
 
   /* === Utilities === */
   --transition: 250ms ease-out;
 
-  --h-top: 72px;
-  --h-top-desktop: 130px;
+  /* semantic roles (aliases) */
+  --fs-display: var(--fs-900);
+  --fs-headline: var(--fs-800);
+  --fs-title-lg: var(--fs-700);
+  --fs-subtitle: var(--fs-650);
+  --fs-alt-title: var(--fs-600);
+  --fs-body-lg: var(--fs-500);
+  --fs-button: var(--fs-500);
+  --fs-eyebrow: var(--fs-700);
 }

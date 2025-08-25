@@ -4,7 +4,7 @@
  *
  * This file contains theme-specific functions and customizations for the LC Harrier 2025 theme.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 // Exit if accessed directly.
@@ -12,10 +12,6 @@ defined( 'ABSPATH' ) || exit;
 
 require_once LC_THEME_DIR . '/inc/lc-utility.php';
 require_once LC_THEME_DIR . '/inc/lc-acf-theme-palette.php';
-require_once LC_THEME_DIR . '/inc/lc-posttypes.php';
-require_once LC_THEME_DIR . '/inc/lc-taxonomies.php';
-
-
 require_once LC_THEME_DIR . '/inc/lc-blocks.php';
 
 // Remove unwanted SVG filter injection WP.
@@ -26,27 +22,35 @@ remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
  * Editor styles: opt-in so WP loads editor.css in the block editor.
  * With theme.json present, this just adds your custom CSS on top (variables, helpers).
  */
-add_action( 'after_setup_theme', function () {
-    add_theme_support( 'editor-styles' );
-    add_editor_style( 'css/editor.css' );
-}, 5 );
+add_action(
+    'after_setup_theme',
+    function () {
+        add_theme_support( 'editor-styles' );
+        add_editor_style( 'css/editor.css' );
+    },
+    5
+);
 
 /**
  * Neutralise legacy palette/font-size support (if parent/Understrap adds them).
  * theme.json is authoritative, but some themes still register supports in PHP.
  * Remove them AFTER the parent has added them (high priority).
  */
-add_action( 'after_setup_theme', function () {
-    remove_theme_support( 'editor-color-palette' );
-    remove_theme_support( 'editor-gradient-presets' );
-    remove_theme_support( 'editor-font-sizes' );
-}, 99 );
+add_action(
+    'after_setup_theme',
+    function () {
+        remove_theme_support( 'editor-color-palette' );
+        remove_theme_support( 'editor-gradient-presets' );
+        remove_theme_support( 'editor-font-sizes' );
+    },
+    99
+);
 
 /**
  * (Optional) Ensure custom colours *aren’t* forcibly disabled by parent.
  * If Understrap disables custom colours, this re-enables them so theme.json works fully.
  */
-add_filter( 'should_load_separate_core_block_assets', '__return_true' ); // performance nicety
+add_filter( 'should_load_separate_core_block_assets', '__return_true' ); // performance nicety.
 
 /**
  * Removes specific page templates from the available templates list.
@@ -97,9 +101,9 @@ function widgets_init() {
 
     register_nav_menus(
         array(
-            'primary_nav'  => __( 'Primary Nav', 'lc-harrier2025' ),
-            'footer_menu1' => __( 'Footer Nav 1', 'lc-harrier2025' ),
-            'footer_menu2' => __( 'Footer Nav 2', 'lc-harrier2025' ),
+            'primary_nav'  => __( 'Primary Nav', 'lc-vyapparel2025' ),
+            'footer_menu1' => __( 'Footer Nav 1', 'lc-vyapparel2025' ),
+            'footer_menu2' => __( 'Footer Nav 2', 'lc-vyapparel2025' ),
         )
     );
 
@@ -184,14 +188,13 @@ function lc_theme_enqueue() {
     // wp_enqueue_script( 'splide-scripts', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.3/dist/js/splide.min.js', array(), null, true );
     // wp_enqueue_style('lightbox-stylesheet', get_stylesheet_directory_uri() . '/css/lightbox.min.css', array(), $the_theme->get('Version'));
     // wp_enqueue_script('lightbox-scripts', get_stylesheet_directory_uri() . '/js/lightbox.min.js', array(), $the_theme->get('Version'), true);
+    // wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css', array(), null );
+    // wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js', array(), null, true );
+    // wp_enqueue_style( 'glightbox-style', 'https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/css/glightbox.min.css', array(), $the_theme->get( 'Version' ) );
+    // wp_enqueue_script( 'glightbox', 'https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/js/glightbox.min.js', array(), $the_theme->get( 'Version' ), true );
     // phpcs:enable
     wp_enqueue_style( 'aos-style', 'https://unpkg.com/aos@2.3.1/dist/aos.css', array() );
     wp_enqueue_script( 'aos', 'https://unpkg.com/aos@2.3.1/dist/aos.js', array(), null, true );
-    wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css', array(), null );
-    wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js', array(), null, true );
-
-    wp_enqueue_style( 'glightbox-style', 'https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/css/glightbox.min.css', array(), $the_theme->get( 'Version' ) );
-    wp_enqueue_script( 'glightbox', 'https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/js/glightbox.min.js', array(), $the_theme->get( 'Version' ), true );
 
     wp_deregister_script( 'jquery' );
 }
@@ -210,72 +213,54 @@ add_action( 'wp_enqueue_scripts', 'lc_theme_enqueue' );
 // add_filter('wp_nav_menu_items', 'add_custom_menu_item', 10, 2);
 // phpcs:enable
 
-function lc_get_area_page_by_slug( string $slug ) {
-    $parent = get_page_by_path( 'areas' );
-    if ( ! $parent ) {
-        return null;
+// VY Founders
+
+// remove coupon form at top
+add_action( 'wp', function() {
+    if ( is_checkout() && ! is_order_received_page() ) {
+        remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
     }
-    // get_page_by_path with parent context (WordPress doesn’t do nested path matching here),
-    // so we fetch by path "areas/{$slug}" in one go:
-    $page = get_page_by_path( 'areas/' . $slug );
-    return $page instanceof WP_Post ? $page : null;
-}
+} );
 
-function lc_render_areas_we_cover_from_taxonomy() {
-    $counties = get_terms( array(
-        'taxonomy'   => 'area',
-        'parent'     => 0,
-        'hide_empty' => false,
-        'orderby'    => 'name',
-        'order'      => 'ASC',
-    ) );
+// // rename headings inside core field templates
+// add_filter( 'woocommerce_checkout_fields', function( $fields ) {
+//     // email first
+//     $fields['billing']['billing_email']['priority'] = 5;
+//     $fields['billing']['billing_email']['label']    = 'Email address';
 
-    if ( is_wp_error( $counties ) || empty( $counties ) ) {
-        return;
+//     // tidy labels / placeholders
+//     $fields['billing']['billing_first_name']['label'] = 'First name';
+//     $fields['billing']['billing_last_name']['label']  = 'Last name';
+//     $fields['shipping']['shipping_first_name']['label'] = 'First name';
+//     $fields['shipping']['shipping_last_name']['label']  = 'Last name';
+
+//     // optional phone
+//     if ( isset( $fields['billing']['billing_phone'] ) ) {
+//         $fields['billing']['billing_phone']['required'] = false;
+//         $fields['billing']['billing_phone']['label']    = 'Phone (optional)';
+//     }
+
+//     return $fields;
+// } );
+
+// show the chosen number nicely in the order items (checkout + emails)
+add_filter( 'woocommerce_cart_item_name', function( $name, $cart_item, $key ) {
+    if ( ! empty( $cart_item['vy_num'] ) ) {
+        $name = 'VY Founder — ' . esc_html( $cart_item['vy_num'] );
     }
+    return $name;
+}, 10, 3 );
 
-    foreach ( $counties as $county ) {
-        $areas = get_terms( array(
-            'taxonomy'   => 'area',
-            'parent'     => (int) $county->term_id,
-            'hide_empty' => false,
-            'orderby'    => 'name',
-            'order'      => 'ASC',
-        ) );
-
-        if ( is_wp_error( $areas ) || empty( $areas ) ) {
-            continue;
-        }
-
-        echo '<div class="areas__group">';
-        // Try to find a page for the county (area title)
-        $county_slug = $county->slug;
-        $county_page = lc_get_area_page_by_slug( $county_slug );
-        echo '<h3 class="h3" style="font-size: var(--fs-h3); line-height: var(--lh-snug); color: var(--col-neutral-900);">';
-        if ( $county_page ) {
-            echo '<a class="areas__link--h3" href="' . esc_url( get_permalink( $county_page->ID ) ) . '">' . esc_html( $county->name ) . '</a>';
-        } else {
-            echo esc_html( $county->name );
-        }
-        echo '</h3>';
-        echo '<ul class="areas__list">';
-
-        foreach ( $areas as $term ) {
-            $slug = $term->slug; // e.g. "guildford"
-            $page = lc_get_area_page_by_slug( $slug );
-
-            echo '<li class="areas__item">';
-            if ( $page ) {
-                echo '<a class="areas__link" href="' . esc_url( get_permalink( $page->ID ) ) . '">'
-                   . esc_html( $term->name ) . '</a>';
-            } else {
-                echo '<span class="areas__text">' . esc_html( $term->name ) . '</span>';
-            }
-            echo '</li>';
-        }
-
-        echo '</ul>';
-        echo '</div>';
+// hide the tiny “× 1” on checkout summary for founder line
+add_filter( 'woocommerce_cart_item_quantity', function( $qty_html, $cart_item, $key ) {
+    if ( ! empty( $cart_item['vy_num'] ) ) {
+        return '';
     }
+    return $qty_html;
+}, 10, 3 );
 
-}
+// button text
+add_filter( 'woocommerce_order_button_text', function( $txt ) { return 'Submit'; } );
+
+add_filter( 'woocommerce_cart_needs_shipping', '__return_false' );
+add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );

@@ -2,7 +2,7 @@
 /**
  * Theme typography reference output from _props.scss
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

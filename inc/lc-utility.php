@@ -2,7 +2,7 @@
 /**
  * Utility functions and shortcodes.
  *
- * @package lc-harrier2025
+ * @package lc-vyapparel2025
  */
 
 /**
