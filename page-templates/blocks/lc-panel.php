@@ -229,7 +229,7 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
                     if ( 'divider' === $layout ) {
                         ?>
             <h2 class="u-headline text-uppercase text-black boxed mb-5">
-                        <?= wp_kses_post( get_sub_field( 'text' ) ); ?>
+                        <?= wp_kses_post( get_sub_field( 'divider' ) ); ?>
             </h2>
                         <?php
                     }
