@@ -229,7 +229,7 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
                     if ( 'divider' === $layout ) {
                         ?>
             <h2 class="u-headline text-uppercase text-black boxed mb-5">
-                        <?= wp_kses_post( $merch['title'] ); ?>
+                        <?= wp_kses_post( get_sub_field( 'title' ) ); ?>
             </h2>
                         <?php
                     }
