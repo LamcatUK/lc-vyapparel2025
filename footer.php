@@ -18,10 +18,10 @@ defined( 'ABSPATH' ) || exit;
 		<div class="row pb-5">
 			<div class="col-md-8">
 				<div class="u-headline text-uppercase mb-4">
-					<span>The VY Blacklist:</span> Your All-Access Pass to What's Next.
+					<span>The VY Elite List:</span> Your All-Access Pass to What's Next.
 				</div>
 				<form action="#" method="post" class="mailinglist-form d-flex align-items-center gap-3">
-					<span class="col-accent me-4">JOIN VY BLACKLIST</span>
+					<span class="col-accent me-4">JOIN VY ELITE LIST</span>
 					<input type="email" class="form-control w-auto" placeholder="your@emailaddress.com" required>
 					<button type="submit" class="button u-button" style="padding-block: 0.35rem;">&nbsp;</button>
 				</form>

@@ -34,10 +34,9 @@ if ( $image && ! empty( $image['url'] ) ) {
 $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
 ?>
 <section class="<?= esc_attr( $attr_class ); ?>" style="<?= esc_attr( $style ); ?>" role="region" aria-label="Hero panel" id="<?= esc_attr( get_field( 'section_id' ) ); ?>">
-    <div class="container text-center">
-
         <?php
         if ( 'opener' === $variant ) {
+            echo '<div class="container text-center">';
             // Read opener group once.
             $opener = is_array( $variant_data ) ? $variant_data : array();
 
@@ -69,9 +68,11 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
                 <p class="u-subtitle"><?= esc_html( $opener['subtitle'] ); ?></p>
                 <?php
             }
+            echo '</div>';
         }
 
         if ( 'claim' === $variant ) {
+            echo '<div class="container text-center">';
             // Read opener group once.
             $claim = is_array( $variant_data ) ? $variant_data : array();
             if ( ! empty( $claim['eyebrow'] ) ) {
@@ -107,9 +108,11 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
                 </a>
                 <?php
             }
+            echo '</div>';
         }
 
         if ( 'coded_legacy' === $variant ) {
+            echo '<div class="container text-center">';
             // Read opener group once.
             $coded_legacy = is_array( $variant_data ) ? $variant_data : array();
 
@@ -146,9 +149,11 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
                 </p>
                 <?php
             }
+            echo '</div>';
         }
 
         if ( 'long_copy' === $variant ) {
+            echo '<div class="container text-center">';
             // Read opener group once.
             $long_copy = is_array( $variant_data ) ? $variant_data : array();
 
@@ -167,50 +172,71 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
                 <img src="<?= esc_url( get_stylesheet_directory_uri() . '/img/visualize-yourself.svg' ); ?>" alt="Visualize Yourself">
             </div>
             <?php
+            echo '</div>';
         }
 
         if ( 'merch' === $variant ) {
+            echo '<div class="container d-block text-center">';
             // Read opener group once.
             $merch = is_array( $variant_data ) ? $variant_data : array();
 
             if ( ! empty( $merch['title'] ) ) {
                 ?>
-                <h2 class="u-headline text-uppercase text-black boxed mb-5">
-                    <?= wp_kses_post( $merch['title'] ); ?>
-                </h2>
+            <h2 class="u-headline text-uppercase text-black boxed mb-5">
+                <?= wp_kses_post( $merch['title'] ); ?>
+            </h2>
                 <?php
             }
-            ?>
-            <div class="row g-5">
-                <?php
-                while ( have_rows( 'merchandise_items' ) ) {
+
+            if ( have_rows( 'items' ) ) {
+                while ( have_rows( 'items' ) ) {
                     the_row();
-                    ?>
-                    <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="text-start merch__card">
+
+                    $layout = get_row_layout();
+
+                    if ( 'merchandise_items' === $layout ) {
+                        ?>
+            <div class="row g-5">
+                        <?php
+                        while ( have_rows( 'merchandise_items' ) ) {
+                            the_row();
+                            ?>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="text-start merch__card">
                             <?= wp_get_attachment_image( get_sub_field( 'image' ), 'large', false, array( 'class' => 'merch__image mb-4' ) ); ?>
-                            <h3 class="u-body-lg text-uppercase text-black fw-bold ff-gotham">
-                                <?= esc_html( get_sub_field( 'title' ) ); ?>
-                                <?php
-                                if ( get_sub_field( 'price' ) ) {
-                                    ?>
-                                    &mdash; $<?= esc_html( get_sub_field( 'price' ) ); ?>
-                                    <?php
-                                }
+                        <h3 class="u-body-lg text-uppercase text-black fw-bold ff-gotham">
+                            <?= esc_html( get_sub_field( 'title' ) ); ?>
+                            <?php
+                            if ( get_sub_field( 'price' ) ) {
                                 ?>
-                            </h3>
-                            <div class="u-body text-black">
-                                <?= wp_kses_post( get_sub_field( 'description' ) ); ?>
-                            </div>
+                                &mdash; $<?= esc_html( get_sub_field( 'price' ) ); ?>
+                                <?php
+                            }
+                            ?>
+                        </h3>
+                        <div class="u-body text-black">
+                            <?= wp_kses_post( get_sub_field( 'description' ) ); ?>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
+                </div>
+                            <?php
+                        }
+                        ?>
             </div>
-            <?php
-        }
+                        <?php
+                    }
 
+                    if ( 'divider' === $layout ) {
+                        ?>
+            <h2 class="u-headline text-uppercase text-black boxed mb-5">
+                        <?= wp_kses_post( $merch['title'] ); ?>
+            </h2>
+                        <?php
+                    }
+                }
+            }
+            echo '</div>';
+        }
         ?>
     </div>
 
