@@ -173,3 +173,15 @@ strong {
   border: 2px solid var(--col-accent-400);
   padding: 1rem 1.5rem 0.75rem 1.5rem;
 }
+
+ul.flex-list {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  li {
+    list-style: none;
+    text-align: center;
+    flex-basis: calc(200px - 1rem);
+  }
+}

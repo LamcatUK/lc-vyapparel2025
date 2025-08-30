@@ -13,6 +13,7 @@ defined( 'ABSPATH' ) || exit;
 require_once LC_THEME_DIR . '/inc/lc-utility.php';
 require_once LC_THEME_DIR . '/inc/lc-acf-theme-palette.php';
 require_once LC_THEME_DIR . '/inc/lc-blocks.php';
+require_once LC_THEME_DIR . '/inc/lc-woocommerce.php';
 
 // Remove unwanted SVG filter injection WP.
 remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );

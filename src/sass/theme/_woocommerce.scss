@@ -1,0 +1,29 @@
+.woocommerce-checkout #payment {
+  background-color: transparent;
+  border-radius: 0;
+}
+.woocommerce #payment .form-row select,
+.woocommerce-page #payment .form-row select {
+  width: 100%;
+}
+
+.woocommerce form .form-row label {
+  font-family: var(--ff-sans-secondary);
+  font-weight: var(--fw-light);
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.woocommerce-billing-fields__field-wrapper {
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+.form-heading {
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  color: var(--col-accent-400);
+  font-family: var(--ff-sans-primary);
+  border-bottom: 1px solid var(--col-accent-400);
+}

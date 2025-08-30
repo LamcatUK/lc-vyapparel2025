@@ -1,7 +1,17 @@
 <?php
+/**
+ * WooCommerce Checkout Form Template
+ *
+ * @package lc-vyapparel2025
+ */
+
 defined( 'ABSPATH' ) || exit;
 
-/** @var WC_Checkout $checkout */
+/**
+ * Checkout object instance.
+ *
+ * @var WC_Checkout $checkout
+ */
 do_action( 'woocommerce_before_checkout_form', $checkout );
 
 // stop if registration required and not logged in.
@@ -31,12 +41,13 @@ foreach ( WC()->cart->get_cart() as $item ) {
 <section class="lc-panel vy-pay-hero" style="--bg:url(<?= esc_url( get_stylesheet_directory_uri() . '/img/vy-pay-hero.jpg' ); ?>);" role="region" aria-label="Hero panel">
   	<div class="container text-center">
 		<h1 class="u-display--light text-uppercase">Welcome to the future of <span>luxury</span></h1>
-		<div class="u-body-lg">The luxury world is evolving &mdash; and resale is at the center.</div>
-		<div class="u-body-lg">Vintage and authenticated peices are outperforming retail</div>
-		<div class="u-body-lg">You'll hold access to drops that increase in value the moment they sell out &mdash; all tied to a global network of numbered founders.</div>
+		<div class="u-body-lg">The world of luxury is evolving &mdash; and exclusivity is at the center.</div>
+		<div class="u-body-lg">Mass retail dilutes value. VY redefines it.</div>
+		
+		<div class="u-body-lg">When you claim your Founder Number, you're securing more than a membership. You're locking in your permanent place in the VY legacy &mdash; authenticated, traceable, and engineered to grow in value.</div>
+		<div class="u-body-lg">Each Founder receives four exclusive drops a year, crafted in limited runs and verified through our three-layer authentication system. Lower numbers hold the most prestige. Once a number is claimed, it's gone forever.</div>
 
-		<h2 class="u-headline text-uppercase col-accent">You're not just joining a brand.</h2>
-		<p class="u-body-lg">You're joining a movement where <strong>your number becomes equity</strong>.</p>
+		<p class="u-body-lg">This is <strong>scarcity you can wear</strong> &mdash; and a movement you can own.</p>
 
 		<?php
 		if ( $vy_num ) {
@@ -46,7 +57,17 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		}
 		?>
 
-		<div class="u-body-lg col-accent">Secure your Founder Number for $1,111 TODAY</div>
+		<div class="u-body-lg fw-bold col-accent">Secure your Founder Number for $1,111 TODAY</div>
+
+		<div class="u-sm">This is a one-time annual fee — not a monthly subscription.<br>
+			Your payment includes:
+			<ul class="u-body flex-list mt-3">
+				<li>Four quarterly VY Platinum drops (apparel + accessories)</li>
+				<li>Permanent founder number ownership (as long as annual renewal is maintained)</li>
+				<li>Exclusive 30% founder pricing + resale margin opportunity</li>
+				<li>Access to VY's authenticated registry securing your legacy</li>
+			</ul>
+		</div>
 	</div>
 	<div class="lc-panel__scroll-cue" aria-hidden="true">
 		<a href="#payment">
@@ -54,21 +75,17 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		</a>
 	</div>
 </section>
-<section class="container" id="payment">
+<section class="container py-5" id="payment">
 	<form name="checkout" method="post" class="checkout vy-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
 	<div class="vy-checkout__grid">
-		<div class="vy-checkout__col vy-checkout__col--left" id="customer_details">
-		<h2 class="vy-checkout__heading">Contact information</h2>
+		<div class="u-body-lg text-center w-md-50 mx-auto mb-5">To authenticate, prevent fraud, and set up future resale capabilities, please provide the following information:</div>
 		<?php
-		// billing fields (we’ve pruned + reordered via filter below)
+		// billing fields (we’ve pruned + reordered via filter below).
 		do_action( 'woocommerce_checkout_billing' );
-		?>
 
-		<h2 class="vy-checkout__heading">Shipping address</h2>
-		<?php
-		// if you don’t ship, you can hide this with a filter; leaving here for the screenshot layout
-		do_action( 'woocommerce_checkout_shipping' );
+		// if you don’t ship, you can hide this with a filter; leaving here for the screenshot layout.
+		// do_action( 'woocommerce_checkout_shipping' );
 		?>
 		</div>
 
