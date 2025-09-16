@@ -12,6 +12,19 @@ define( 'LC_THEME_DIR', WP_CONTENT_DIR . '/themes/lc-vyapparel2025' );
 
 require_once LC_THEME_DIR . '/inc/lc-theme.php';
 
+
+// Force WooCommerce to use classic checkout.
+add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+
+// Prevent Stripe's block integration script from loading (classic only).
+add_action( 'enqueue_block_assets', function() {
+    if ( is_checkout() ) {
+        wp_dequeue_script( 'wc-stripe-blocks-integration' );
+    }
+}, 20 );
+
+
+
 /**
  * Removes the parent themes stylesheet and scripts from inc/enqueue.php
  */

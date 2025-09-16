@@ -27,3 +27,33 @@
   font-family: var(--ff-sans-primary);
   border-bottom: 1px solid var(--col-accent-400);
 }
+
+.woocommerce-order-received .woocommerce-thankyou-order-received {
+  @extend .u-display;
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+}
+
+/* General state field */
+#billing_state,
+.woocommerce-billing-fields #billing_state {
+  border: var(--wc-form-border-width) solid var(--wc-form-border-color);
+  border-radius: var(--wc-form-border-radius);
+  font-size: 1rem;
+}
+
+/* Match other input fields */
+.select2-container .select2-selection--single {
+  height: 42px;
+  border: var(--wc-form-border-width) solid var(--wc-form-border-color);
+  border-radius: var(--wc-form-border-radius);
+  font-size: 1rem;
+}
+
+/* Align the dropdown arrow */
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 40px;
+  right: 10px;
+}

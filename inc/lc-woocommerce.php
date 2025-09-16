@@ -11,12 +11,47 @@ add_filter( 'woocommerce_checkout_fields', 'customize_billing_fields' );
 
 add_filter( 'woocommerce_checkout_fields', 'customize_billing_fields' );
 
+add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+
+// Disable WooCommerce Blocks scripts so gateways don't try to hook into them.
+add_action(
+    'enqueue_block_assets',
+    function () {
+        if ( is_checkout() ) {
+            wp_dequeue_script( 'wc-stripe-blocks-integration' );
+            wp_dequeue_script( 'wc-checkout-blocks' );
+        }
+    },
+    20
+);
+
+add_filter( 'woocommerce_order_item_name', function( $name, $item ) {
+    if ( is_order_received_page() || is_wc_endpoint_url( 'view-order' ) ) {
+        $name = $item->get_name(); // plain text, no link.
+    }
+    return $name;
+}, 10, 2 );
+
+add_filter( 'woocommerce_order_item_display_meta_key', function( $display_key, $meta, $item ) {
+    if ( 'vy_num' === $meta->key ) {
+        $display_key = 'Founder Number'; // new label
+    }
+    return $display_key;
+}, 10, 3 );
+
+
 function customize_billing_fields( $fields ) {
     $vy_num = '';
-    foreach ( WC()->cart->get_cart() as $item ) {
-        if ( ! empty( $item['vy_num'] ) ) {
-            $vy_num = $item['vy_num'];
-            break;
+
+    if ( function_exists( 'WC' ) && ! is_admin() && is_checkout() ) {
+        $cart = WC()->cart;
+        if ( $cart && ! is_null( $cart ) ) {
+            foreach ( $cart->get_cart() as $item ) {
+                if ( ! empty( $item['vy_num'] ) ) {
+                    $vy_num = $item['vy_num'];
+                    break;
+                }
+            }
         }
     }
 

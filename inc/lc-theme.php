@@ -197,10 +197,13 @@ function lc_theme_enqueue() {
     wp_enqueue_style( 'aos-style', 'https://unpkg.com/aos@2.3.1/dist/aos.css', array() );
     wp_enqueue_script( 'aos', 'https://unpkg.com/aos@2.3.1/dist/aos.js', array(), null, true );
 
-    wp_deregister_script( 'jquery' );
+    if ( is_checkout() ) {
+        wp_enqueue_script( 'jquery' );
+    } else {
+        wp_deregister_script( 'jquery' );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'lc_theme_enqueue' );
-
 
 // phpcs:disable
 // function add_custom_menu_item($items, $args)

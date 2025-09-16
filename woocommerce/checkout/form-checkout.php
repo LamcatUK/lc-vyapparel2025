@@ -76,7 +76,7 @@ foreach ( WC()->cart->get_cart() as $item ) {
 	</div>
 </section>
 <section class="container py-5" id="payment">
-	<form name="checkout" method="post" class="checkout vy-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+	<form name="checkout" method="post" class="checkout woocommerce-checkout vy-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
 	<div class="vy-checkout__grid">
 		<div class="u-body-lg text-center w-md-50 mx-auto mb-5">To authenticate, prevent fraud, and set up future resale capabilities, please provide the following information:</div>
@@ -86,14 +86,34 @@ foreach ( WC()->cart->get_cart() as $item ) {
 
 		// if you don’t ship, you can hide this with a filter; leaving here for the screenshot layout.
 		// do_action( 'woocommerce_checkout_shipping' );
+
+		
+		$rows = get_field( 'messages', 'option' );
+		if ( is_array( $rows ) ) {
+			$total        = count( $rows );
+			$random_index = wp_rand( 0, $total - 1 );
+			$random_row   = $rows[ $random_index ];
+
+
+			if ( ! empty( $random_row['primary'] ) ) {
+				?>
+				<div class="text-center my-5">
+					<div class="u-title-lg mb-4"><?= esc_html( $random_row['primary'] ); ?></div>
+					<div class="u-body-lg"><?= esc_html( $random_row['secondary'] ); ?></div>
+				</div>
+				<?php
+			}
+		}
 		?>
 		</div>
-
+		<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
 		<div class="vy-checkout__col vy-checkout__col--right" id="order_review">
-		<h2 class="vy-checkout__heading">Order summary</h2>
-		<div class="woocommerce-checkout-review-order">
-			<?php do_action( 'woocommerce_checkout_order_review' ); ?>
-		</div>
+			<!-- <h2 class="vy-checkout__heading">Order summary</h2> -->
+			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+			<div class="woocommerce-checkout-review-order">
+				<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+			</div>
+			<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 		</div>
 	</div>
 

@@ -43,13 +43,21 @@ $col-light: #f2f2f2;
   /* =========================
      TYPOGRAPHY (responsive sizes)
      ========================= */
-  --fs-900: clamp(2.25rem, 5.2vw + 0.9rem, 7rem); /* max 7rem */
-  --fs-800: clamp(2rem, 4.2vw + 0.7rem, 4rem); /* max 4rem */
-  --fs-700: clamp(1.35rem, 3vw + 0.45rem, 3rem); /* max 3rem */
-  --fs-650: clamp(1.125rem, 2.5vw + 0.45rem, 2.8rem); /* max 2.8rem */
-  --fs-600: clamp(1rem, 2.2vw + 0.45rem, 2.4rem); /* max 2.4rem */
-  --fs-500: clamp(0.95rem, 1.75vw + 0.45rem, 1.7rem); /* max 1.7rem */
-  --fs-400: 1rem;
+  // --fs-900: clamp(2.25rem, 5.2vw + 0.9rem, 7rem); /* max 7rem */
+  // --fs-800: clamp(2rem, 4.2vw + 0.7rem, 4rem); /* max 4rem */
+  // --fs-700: clamp(1.35rem, 3vw + 0.45rem, 3rem); /* max 3rem */
+  // --fs-650: clamp(1.125rem, 2.5vw + 0.45rem, 2.8rem); /* max 2.8rem */
+  // --fs-600: clamp(1rem, 2.2vw + 0.45rem, 2.4rem); /* max 2.4rem */
+  // --fs-500: clamp(0.95rem, 1.75vw + 0.45rem, 1.7rem); /* max 1.7rem */
+  // --fs-400: 1rem;
+
+  --fs-900: clamp(2rem, 4.8vw + 0.8rem, 6.5rem); /* max 6.5rem */
+  --fs-800: clamp(1.85rem, 3.9vw + 0.65rem, 3.6rem); /* max 3.6rem */
+  --fs-700: clamp(1.25rem, 2.8vw + 0.4rem, 2.7rem); /* max 2.7rem */
+  --fs-650: clamp(1.05rem, 2.3vw + 0.4rem, 2.5rem); /* max 2.5rem */
+  --fs-600: clamp(0.95rem, 2vw + 0.4rem, 2.2rem); /* max 2.2rem */
+  --fs-500: clamp(0.9rem, 1.6vw + 0.4rem, 1.55rem); /* max 1.55rem */
+  --fs-400: 0.95rem;
 
   /* === Utilities === */
   --transition: 250ms ease-out;
