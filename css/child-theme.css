@@ -21719,6 +21719,14 @@ strong {
   color: var(--col-accent-400);
 }
 
+.highlight {
+  display: inline-block;
+  background-color: var(--col-accent-400);
+  color: var(--col-black);
+  padding: 0.5rem 0.5rem;
+  font-weight: var(--fw-medium);
+}
+
 .boxed {
   display: inline-block;
   border: 2px solid var(--col-accent-400);

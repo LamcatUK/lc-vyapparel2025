@@ -98,8 +98,8 @@ foreach ( WC()->cart->get_cart() as $item ) {
 			if ( ! empty( $random_row['primary'] ) ) {
 				?>
 				<div class="text-center my-5">
-					<div class="u-title-lg mb-4"><?= esc_html( $random_row['primary'] ); ?></div>
-					<div class="u-body-lg"><?= esc_html( $random_row['secondary'] ); ?></div>
+					<div class="u-title-lg mb-4 highlight"><?= esc_html( $random_row['primary'] ); ?></div>
+					<div class="u-body-lg highlight"><?= esc_html( $random_row['secondary'] ); ?></div>
 				</div>
 				<?php
 			}
