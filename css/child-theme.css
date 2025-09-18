@@ -30,13 +30,13 @@
   /* =========================
      TYPOGRAPHY (responsive sizes)
      ========================= */
-  --fs-900: clamp(2rem, 4.8vw + 0.8rem, 6.5rem); /* max 6.5rem */
-  --fs-800: clamp(1.85rem, 3.9vw + 0.65rem, 3.6rem); /* max 3.6rem */
-  --fs-700: clamp(1.25rem, 2.8vw + 0.4rem, 2.7rem); /* max 2.7rem */
-  --fs-650: clamp(1.05rem, 2.3vw + 0.4rem, 2.5rem); /* max 2.5rem */
-  --fs-600: clamp(0.95rem, 2vw + 0.4rem, 2.2rem); /* max 2.2rem */
-  --fs-500: clamp(0.9rem, 1.6vw + 0.4rem, 1.55rem); /* max 1.55rem */
-  --fs-400: 0.95rem;
+  --fs-900: clamp(2rem, 3.7vw + 0.8rem, 5rem); /* max 5rem */
+  --fs-800: clamp(1.8rem, 3.2vw + 0.65rem, 3rem); /* max 3rem */
+  --fs-700: clamp(1.25rem, 2.3vw + 0.35rem, 2.25rem); /* max 2.25rem */
+  --fs-650: clamp(1.1rem, 2vw + 0.35rem, 2.1rem); /* max 2.1rem */
+  --fs-600: clamp(1rem, 1.7vw + 0.35rem, 1.8rem); /* max 1.8rem */
+  --fs-500: clamp(0.95rem, 1.4vw + 0.35rem, 1.3rem); /* max 1.3rem */
+  --fs-400: 1rem;
   /* === Utilities === */
   --transition: 250ms ease-out;
   /* semantic roles (aliases) */
