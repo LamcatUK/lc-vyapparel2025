@@ -62,7 +62,7 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		<div class="u-sm">This is a one-time annual fee — not a monthly subscription.<br>
 			Your payment includes:
 			<ul class="u-body flex-list mt-3">
-				<li>Four quarterly VY Platinum drops (apparel + accessories)</li>
+				<li>Four quarterly VY Elite drops (apparel + accessories)</li>
 				<li>Permanent founder number ownership (as long as annual renewal is maintained)</li>
 				<li>Exclusive 30% founder pricing + resale margin opportunity</li>
 				<li>Access to VY's authenticated registry securing your legacy</li>
