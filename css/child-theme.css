@@ -21758,15 +21758,15 @@ ul.flex-list li {
 }
 
 .button {
-  background-color: var(--col-accent-400);
-  color: var(--col-black);
-  font-size: var(--fs-button);
-  font-weight: var(--fw-bold);
-  text-decoration: none;
-  border-radius: 8px;
-  padding: var(--btn-py) var(--btn-px);
-  border: var(--btn-border-w) solid transparent;
-  transition: background-color var(--btn-transition), border-color var(--btn-transition);
+  background-color: var(--col-accent-400) !important;
+  color: var(--col-black) !important;
+  font-size: var(--fs-button) !important;
+  font-weight: var(--fw-bold) !important;
+  text-decoration: none !important;
+  border-radius: 8px !important;
+  padding: var(--btn-py) var(--btn-px) !important;
+  border: var(--btn-border-w) solid transparent !important;
+  transition: background-color var(--btn-transition), border-color var(--btn-transition) !important;
 }
 
 .footer {
@@ -21853,6 +21853,10 @@ ul.flex-list li {
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   height: 40px;
   right: 10px;
+}
+
+.product-quantity {
+  display: none;
 }
 
 .lc-panel {

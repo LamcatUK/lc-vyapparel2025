@@ -217,54 +217,74 @@ add_action( 'wp_enqueue_scripts', 'lc_theme_enqueue' );
 // add_filter('wp_nav_menu_items', 'add_custom_menu_item', 10, 2);
 // phpcs:enable
 
-// VY Founders
+// VY Founders.
 
-// remove coupon form at top
-add_action( 'wp', function() {
-    if ( is_checkout() && ! is_order_received_page() ) {
-        remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+// remove coupon form at top.
+add_action(
+    'wp',
+    function () {
+        if ( is_checkout() && ! is_order_received_page() ) {
+            remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+        }
     }
+);
+
+/*
+// rename headings inside core field templates.
+add_filter( 'woocommerce_checkout_fields', function( $fields ) {
+    // email first
+    $fields['billing']['billing_email']['priority'] = 5;
+    $fields['billing']['billing_email']['label']    = 'Email address';
+
+    // tidy labels / placeholders
+    $fields['billing']['billing_first_name']['label'] = 'First name';
+    $fields['billing']['billing_last_name']['label']  = 'Last name';
+    $fields['shipping']['shipping_first_name']['label'] = 'First name';
+    $fields['shipping']['shipping_last_name']['label']  = 'Last name';
+
+    // optional phone
+    if ( isset( $fields['billing']['billing_phone'] ) ) {
+        $fields['billing']['billing_phone']['required'] = false;
+        $fields['billing']['billing_phone']['label']    = 'Phone (optional)';
+    }
+
+    return $fields;
 } );
+*/
 
-// // rename headings inside core field templates
-// add_filter( 'woocommerce_checkout_fields', function( $fields ) {
-//     // email first
-//     $fields['billing']['billing_email']['priority'] = 5;
-//     $fields['billing']['billing_email']['label']    = 'Email address';
+// show the chosen number nicely in the order items (checkout + emails).
+add_filter(
+    'woocommerce_cart_item_name',
+    function ( $name, $cart_item, $key ) {
+        if ( ! empty( $cart_item['vy_num'] ) ) {
+            $name = 'VY Founder — ' . esc_html( $cart_item['vy_num'] );
+        }
+        return $name;
+    },
+    10,
+    3
+);
 
-//     // tidy labels / placeholders
-//     $fields['billing']['billing_first_name']['label'] = 'First name';
-//     $fields['billing']['billing_last_name']['label']  = 'Last name';
-//     $fields['shipping']['shipping_first_name']['label'] = 'First name';
-//     $fields['shipping']['shipping_last_name']['label']  = 'Last name';
+// hide the tiny “× 1” on checkout summary for founder line.
+add_filter(
+    'woocommerce_cart_item_quantity',
+    function ( $qty_html, $cart_item, $key ) {
+        if ( ! empty( $cart_item['vy_num'] ) ) {
+            return '';
+        }
+        return $qty_html;
+    },
+    10,
+    3
+);
 
-//     // optional phone
-//     if ( isset( $fields['billing']['billing_phone'] ) ) {
-//         $fields['billing']['billing_phone']['required'] = false;
-//         $fields['billing']['billing_phone']['label']    = 'Phone (optional)';
-//     }
-
-//     return $fields;
-// } );
-
-// show the chosen number nicely in the order items (checkout + emails)
-add_filter( 'woocommerce_cart_item_name', function( $name, $cart_item, $key ) {
-    if ( ! empty( $cart_item['vy_num'] ) ) {
-        $name = 'VY Founder — ' . esc_html( $cart_item['vy_num'] );
+// button text.
+add_filter(
+    'woocommerce_order_button_text',
+    function ( $txt ) {
+        return 'Submit';
     }
-    return $name;
-}, 10, 3 );
-
-// hide the tiny “× 1” on checkout summary for founder line
-add_filter( 'woocommerce_cart_item_quantity', function( $qty_html, $cart_item, $key ) {
-    if ( ! empty( $cart_item['vy_num'] ) ) {
-        return '';
-    }
-    return $qty_html;
-}, 10, 3 );
-
-// button text
-add_filter( 'woocommerce_order_button_text', function( $txt ) { return 'Submit'; } );
+);
 
 add_filter( 'woocommerce_cart_needs_shipping', '__return_false' );
 add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );

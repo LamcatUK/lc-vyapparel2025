@@ -20,12 +20,11 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     return;
 }
 
-// read founder number from cart (if present).
-$vy_num = '';
+// read founder numbers from cart (if present).
+$vy_nums = array();
 foreach ( WC()->cart->get_cart() as $item ) {
     if ( ! empty( $item['vy_num'] ) ) {
-        $vy_num = $item['vy_num'];
-        break;
+        $vy_nums[] = $item['vy_num'];
     }
 }
 ?>
@@ -50,10 +49,12 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		<p class="u-body-lg">This is <strong>scarcity you can wear</strong> &mdash; and a movement you can own.</p>
 
 		<?php
-		if ( $vy_num ) {
-			?>
+		if ( $vy_nums ) {
+			foreach ( $vy_nums as $vy_num ) {
+				?>
 		<div class="vy-pay-hero__number">Your founder number is <strong><?php echo esc_html( $vy_num ); ?></strong></div>
-			<?php
+				<?php
+			}
 		}
 		?>
 
@@ -97,9 +98,12 @@ foreach ( WC()->cart->get_cart() as $item ) {
 
 			if ( ! empty( $random_row['primary'] ) ) {
 				?>
-				<div class="text-center mt-4 p-5 mb-5 mx-auto highlight d-flex flex-column align-items-center"">
+				<div class="text-center mt-4 p-5 mb-5 mx-auto highlight d-flex flex-column align-items-center"" data-aos="fade-up" data-aos-duration="1000">
 					<div class="u-title-lg mb-4"><?= esc_html( $random_row['primary'] ); ?></div>
 					<div class="u-body-lg"><?= esc_html( $random_row['secondary'] ); ?></div>
+				</div>
+				<div class="text-center pb-5" data-aos="fade" data-aos-duration="1000">
+					<a href="/#coded" class="u-button button">Secure More Numbers</a>
 				</div>
 				<?php
 			}
