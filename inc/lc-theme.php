@@ -304,17 +304,38 @@ function lc_add_founder_number_checkout() {
     if ( empty( $vy_num ) || empty( $product_id ) ) {
         wp_send_json_error( 'Invalid data' );
     }
+
+    // Check if this number is already in the cart to prevent duplicates.
+    foreach ( WC()->cart->get_cart() as $cart_item ) {
+        if ( isset( $cart_item['vy_num'] ) && $cart_item['vy_num'] === $vy_num ) {
+            wp_send_json_error( 'This number is already in your cart' );
+        }
+    }
     
-    // Add to cart using WooCommerce.
-    $cart_item_key = WC()->cart->add_to_cart( $product_id, 1, 0, array(), array( 'vy_num' => $vy_num ) );
+    // Temporarily set POST data for VY Numbers plugin to process.
+    $original_post = $_POST;
+    $_POST['vy_num'] = $vy_num;
+    $_POST['vy_num_nonce'] = $original_post['vy_num_nonce'];
     
-    if ( $cart_item_key ) {
+    // Use WooCommerce's add to cart with proper cart item data that includes vy_num.
+    $cart_item_data = array( 'vy_num' => $vy_num, 'unique_key' => 'founder_' . $vy_num );
+    
+    // This should trigger the VY Numbers validation hooks.
+    $result = WC()->cart->add_to_cart( $product_id, 1, 0, array(), $cart_item_data );
+    
+    // Restore original POST data.
+    $_POST = $original_post;
+    
+    if ( $result ) {
         wp_send_json_success( array( 
             'message' => 'Number added successfully',
-            'reload' => true
         ) );
     } else {
-        wp_send_json_error( 'Failed to add number to cart' );
+        // Get WooCommerce error messages.
+        $notices = wc_get_notices( 'error' );
+        $error_message = ! empty( $notices ) ? $notices[0]['notice'] : 'Failed to add number to cart';
+        wc_clear_notices();
+        wp_send_json_error( $error_message );
     }
 }
 add_action( 'wp_ajax_add_founder_number_checkout', 'lc_add_founder_number_checkout' );
@@ -351,6 +372,62 @@ add_action( 'wp_ajax_remove_founder_number', 'lc_remove_founder_number' );
 add_action( 'wp_ajax_nopriv_remove_founder_number', 'lc_remove_founder_number' );
 
 /**
+ * Suppress all WooCommerce notices that mention "VY Founder" site-wide.
+ */
+function lc_suppress_vy_founder_notices() {
+    add_filter( 'woocommerce_get_notices', 'lc_filter_vy_founder_notices', 10, 1 );
+    add_filter( 'wc_add_to_cart_message_html', 'lc_suppress_all_vy_founder_messages', 10, 3 );
+}
+add_action( 'init', 'lc_suppress_vy_founder_notices' );
+
+/**
+ * Filter out notices that mention VY Founder.
+ *
+ * @param array $notices All WooCommerce notices.
+ * @return array Filtered notices.
+ */
+function lc_filter_vy_founder_notices( $notices ) {
+    if ( ! is_array( $notices ) ) {
+        return $notices;
+    }
+    
+    foreach ( $notices as $type => $type_notices ) {
+        if ( is_array( $type_notices ) ) {
+            foreach ( $type_notices as $key => $notice ) {
+                $notice_text = is_array( $notice ) ? ( $notice['notice'] ?? '' ) : $notice;
+                if ( is_string( $notice_text ) && strpos( $notice_text, 'VY Founder' ) !== false ) {
+                    unset( $notices[ $type ][ $key ] );
+                }
+            }
+        }
+    }
+    
+    return $notices;
+}
+
+/**
+ * Suppress all add to cart messages for VY Founder.
+ *
+ * @param string $message   The add to cart message HTML.
+ * @param array  $products  Products added to cart.
+ * @param bool   $show_qty  Whether to show quantity.
+ * @return string           Empty string if VY Founder, original message otherwise.
+ */
+function lc_suppress_all_vy_founder_messages( $message, $products, $show_qty ) {
+    unset( $show_qty );
+    
+    if ( is_array( $products ) ) {
+        foreach ( $products as $product_id => $quantity ) {
+            if ( 134 === (int) $product_id ) {
+                return ''; // Suppress message for VY Founder.
+            }
+        }
+    }
+    
+    return $message;
+}
+
+/**
  * Add JavaScript for handling remove buttons.
  */
 function lc_add_founder_remove_js() {
@@ -383,7 +460,12 @@ function lc_add_founder_remove_js() {
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            window.location.reload(); // Reload to update cart
+                            // Update checkout dynamically instead of reloading
+                            if (typeof jQuery !== 'undefined' && jQuery('body').hasClass('woocommerce-checkout')) {
+                                jQuery('body').trigger('update_checkout');
+                            } else {
+                                window.location.reload(); // Fallback for non-checkout pages
+                            }
                         } else {
                             alert('Error: ' + (data.data || 'Failed to remove founder number'));
                             e.target.textContent = '×';

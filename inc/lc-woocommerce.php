@@ -125,7 +125,7 @@ function customize_billing_fields( $fields ) {
     $fields['billing']['billing_city']['class']             = array( 'form-group', 'col-md-4' );
     $fields['billing']['billing_city']['label']             = '';
     $fields['billing']['billing_city']['placeholder']       = 'Town/city';
-    $fields['billing']['billing_state']['default']          = '';
+    $fields['billing']['billing_state']['default']          = 'CA';
     $fields['billing']['billing_state']['class']            = array( 'form-group', 'col-md-4' );
     $fields['billing']['billing_state']['label']            = '';
 	$fields['billing']['billing_state']['placeholder']      = 'Select an option...';
