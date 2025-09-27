@@ -223,3 +223,58 @@ function set_billing_state_to_empty( $value, $input ) {
     }
     return $value;
 }
+
+// Add remove buttons to founder numbers in checkout order review.
+add_filter( 'woocommerce_checkout_cart_item_quantity', 'lc_add_founder_remove_button_to_quantity', 10, 3 );
+
+/**
+ * Add remove button in the quantity column for founder numbers.
+ *
+ * @param string $quantity_html The quantity HTML.
+ * @param array  $cart_item The cart item data.
+ * @param string $cart_item_key The cart item key.
+ * @return string Modified quantity HTML.
+ */
+function lc_add_founder_remove_button_to_quantity( $quantity_html, $cart_item, $cart_item_key ) {
+    // Only for founder numbers.
+    if ( empty( $cart_item['vy_num'] ) ) {
+        return $quantity_html;
+    }
+    
+    // Count total founder numbers in cart.
+    $founder_count = 0;
+    foreach ( WC()->cart->get_cart() as $item ) {
+        if ( ! empty( $item['vy_num'] ) ) {
+            ++$founder_count;
+        }
+    }
+    
+    // If only one founder number, show "Required" instead of remove button.
+    if ( $founder_count <= 1 ) {
+        return $quantity_html;
+    }
+    
+    // Add remove button.
+    return $quantity_html . ' <a href="#" class="remove-founder-number" data-cart-key="' . esc_attr( $cart_item_key ) . '" style="margin-left: 8px; color: #dc3545; text-decoration: none; font-size: 16px; font-weight: bold;" title="Remove this founder number">&times;</a>';
+}
+
+// Modify cart item name to show founder number prominently.
+add_filter( 'woocommerce_cart_item_name', 'lc_modify_cart_item_name', 10, 3 );
+
+/**
+ * Modify cart item name to show founder number.
+ *
+ * @param string $name The cart item name.
+ * @param array  $cart_item The cart item data.
+ * @param string $cart_item_key The cart item key.
+ * @return string Modified cart item name.
+ */
+function lc_modify_cart_item_name( $name, $cart_item, $cart_item_key ) {
+    // Suppress unused parameter warning.
+    unset( $cart_item_key );
+    
+    if ( ! empty( $cart_item['vy_num'] ) ) {
+        $name = 'VY Founder #' . esc_html( $cart_item['vy_num'] );
+    }
+    return $name;
+}

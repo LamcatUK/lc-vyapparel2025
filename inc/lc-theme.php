@@ -288,3 +288,118 @@ add_filter(
 
 add_filter( 'woocommerce_cart_needs_shipping', '__return_false' );
 add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
+
+/**
+ * AJAX handler for adding founder numbers on checkout page.
+ */
+function lc_add_founder_number_checkout() {
+    // Verify nonce.
+    if ( ! wp_verify_nonce( $_POST['vy_num_nonce'] ?? '', 'vy_num_action' ) ) {
+        wp_send_json_error( 'Security check failed' );
+    }
+    
+    $vy_num = sanitize_text_field( $_POST['vy_num'] ?? '' );
+    $product_id = intval( $_POST['product_id'] ?? 0 );
+    
+    if ( empty( $vy_num ) || empty( $product_id ) ) {
+        wp_send_json_error( 'Invalid data' );
+    }
+    
+    // Add to cart using WooCommerce.
+    $cart_item_key = WC()->cart->add_to_cart( $product_id, 1, 0, array(), array( 'vy_num' => $vy_num ) );
+    
+    if ( $cart_item_key ) {
+        wp_send_json_success( array( 
+            'message' => 'Number added successfully',
+            'reload' => true
+        ) );
+    } else {
+        wp_send_json_error( 'Failed to add number to cart' );
+    }
+}
+add_action( 'wp_ajax_add_founder_number_checkout', 'lc_add_founder_number_checkout' );
+add_action( 'wp_ajax_nopriv_add_founder_number_checkout', 'lc_add_founder_number_checkout' );
+
+/**
+ * AJAX handler for removing founder numbers from cart.
+ */
+function lc_remove_founder_number() {
+    // Verify nonce.
+    if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'woocommerce-cart' ) ) {
+        wp_send_json_error( 'Security check failed' );
+    }
+    
+    $cart_item_key = sanitize_text_field( $_POST['cart_item_key'] ?? '' );
+    
+    if ( empty( $cart_item_key ) ) {
+        wp_send_json_error( 'Invalid cart item' );
+    }
+    
+    // Remove from cart.
+    $removed = WC()->cart->remove_cart_item( $cart_item_key );
+    
+    if ( $removed ) {
+        wp_send_json_success( array( 
+            'message' => 'Founder number removed successfully',
+            'reload' => true,
+        ) );
+    } else {
+        wp_send_json_error( 'Failed to remove founder number' );
+    }
+}
+add_action( 'wp_ajax_remove_founder_number', 'lc_remove_founder_number' );
+add_action( 'wp_ajax_nopriv_remove_founder_number', 'lc_remove_founder_number' );
+
+/**
+ * Add JavaScript for handling remove buttons.
+ */
+function lc_add_founder_remove_js() {
+    if ( is_checkout() ) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle remove button clicks
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-founder-number')) {
+                    e.preventDefault();
+                    
+                    if (!confirm('Are you sure you want to remove this founder number?')) {
+                        return;
+                    }
+                    
+                    var cartKey = e.target.getAttribute('data-cart-key');
+                    var formData = new FormData();
+                    formData.append('action', 'remove_founder_number');
+                    formData.append('cart_item_key', cartKey);
+                    formData.append('nonce', '<?php echo wp_create_nonce( 'woocommerce-cart' ); ?>');
+                    
+                    e.target.textContent = '...';
+                    e.target.style.pointerEvents = 'none';
+                    
+                    fetch('<?php echo admin_url( 'admin-ajax.php' ); ?>', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload(); // Reload to update cart
+                        } else {
+                            alert('Error: ' + (data.data || 'Failed to remove founder number'));
+                            e.target.textContent = '×';
+                            e.target.style.pointerEvents = 'auto';
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error: ' + error.message);
+                        e.target.textContent = '×';
+                        e.target.style.pointerEvents = 'auto';
+                    });
+                }
+            });
+        });
+        </script>
+        <?php
+    }
+}
+add_action( 'wp_footer', 'lc_add_founder_remove_js' );
