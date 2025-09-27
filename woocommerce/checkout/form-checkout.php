@@ -100,7 +100,7 @@ foreach ( WC()->cart->get_cart() as $item ) {
 				?>
 				<div class="text-center mt-4 p-5 mb-5 mx-auto highlight d-flex flex-column align-items-center"" data-aos="fade-up" data-aos-duration="1000">
 					<div class="u-title-lg mb-4"><?= esc_html( $random_row['primary'] ); ?></div>
-					<div class="u-body-lg"><?= esc_html( $random_row['secondary'] ); ?></div>
+					<div class="u-body-lg mb-2"><?= esc_html( $random_row['secondary'] ); ?></div>
 				</div>
 				<?php
 			}
@@ -110,7 +110,7 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		if ( $vy_nums ) {
 			?>
 		<div class="mt-4 mb-4" data-aos="fade" data-aos-duration="1000">
-			<div class="u-body text-center">Want to secure additional numbers?</div>
+			<div class="u-subtitle text-center">Want to secure additional numbers?</div>
 			<?php echo do_shortcode( '[vy_number_picker product_id="134" button_text="Add Another Number"]' ); ?>
 		</div>
 		<?php
