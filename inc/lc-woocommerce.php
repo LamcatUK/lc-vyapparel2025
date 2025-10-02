@@ -240,7 +240,7 @@ function lc_add_founder_remove_button_to_quantity( $quantity_html, $cart_item, $
     if ( empty( $cart_item['vy_num'] ) ) {
         return $quantity_html;
     }
-    
+
     // Count total founder numbers in cart.
     $founder_count = 0;
     foreach ( WC()->cart->get_cart() as $item ) {
@@ -248,12 +248,12 @@ function lc_add_founder_remove_button_to_quantity( $quantity_html, $cart_item, $
             ++$founder_count;
         }
     }
-    
+
     // If only one founder number, show "Required" instead of remove button.
     if ( $founder_count <= 1 ) {
         return $quantity_html;
     }
-    
+
     // Add remove button.
     return $quantity_html . ' <a href="#" class="remove-founder-number" data-cart-key="' . esc_attr( $cart_item_key ) . '" style="margin-left: 8px; color: #dc3545; text-decoration: none; font-size: 16px; font-weight: bold;" title="Remove this founder number">&times;</a>';
 }
@@ -272,9 +272,131 @@ add_filter( 'woocommerce_cart_item_name', 'lc_modify_cart_item_name', 10, 3 );
 function lc_modify_cart_item_name( $name, $cart_item, $cart_item_key ) {
     // Suppress unused parameter warning.
     unset( $cart_item_key );
-    
+
     if ( ! empty( $cart_item['vy_num'] ) ) {
         $name = 'VY Founder #' . esc_html( $cart_item['vy_num'] );
     }
     return $name;
+}
+
+// Override WooCommerce shop URL to point to homepage instead.
+add_filter( 'woocommerce_return_to_shop_redirect', 'lc_redirect_shop_to_homepage' );
+
+/**
+ * Redirect "Return to shop" links to homepage instead of shop page.
+ *
+ * @return string Homepage URL.
+ */
+function lc_redirect_shop_to_homepage() {
+    return home_url();
+}
+
+// Also override the shop page URL used in notices.
+add_filter( 'woocommerce_get_shop_url', 'lc_redirect_shop_to_homepage' );
+
+// Override WooCommerce shop page permalink.
+add_filter( 'woocommerce_get_page_permalink', 'lc_override_shop_permalink', 10, 2 );
+
+/**
+ * Override shop page permalink to return homepage.
+ *
+ * @param string $url  The page URL.
+ * @param string $page The page slug.
+ * @return string Modified URL.
+ */
+function lc_override_shop_permalink( $url, $page ) {
+    if ( 'shop' === $page ) {
+        return home_url();
+    }
+    return $url;
+}
+
+// Filter WooCommerce notices to replace shop links with homepage links.
+add_filter( 'woocommerce_add_notice', 'lc_replace_shop_links_in_notices', 10, 2 );
+
+/**
+ * Replace shop links in WooCommerce notices with homepage links.
+ *
+ * @param string $message The notice message.
+ * @param string $type    The notice type.
+ * @return string Modified message.
+ */
+function lc_replace_shop_links_in_notices( $message, $type ) {
+    // Suppress unused parameter warning.
+    unset( $type );
+
+    $home_url = home_url();
+
+    // Replace common shop link patterns.
+    $message = str_replace( '/shop/', '/', $message );
+    $message = str_replace( 'shop"', '"', $message );
+
+    // Replace "Return to shop" text to make it clearer.
+    $message = str_replace( 'Return to shop', 'Return to homepage', $message );
+
+    // Handle the specific session expired message.
+    if ( strpos( $message, 'session has expired' ) !== false ) {
+        $message = 'Sorry, your session has expired. <a href="' . esc_url( $home_url ) . '">Return to homepage</a>';
+    }
+
+    return $message;
+}
+
+// Also filter the notices that are already stored in session.
+add_action( 'init', 'lc_filter_existing_notices' );
+
+/**
+ * Filter existing WooCommerce notices to replace shop links.
+ */
+function lc_filter_existing_notices() {
+    if ( function_exists( 'wc_get_notices' ) ) {
+        $notices = wc_get_notices();
+
+        if ( ! empty( $notices ) ) {
+            // Clear existing notices.
+            wc_clear_notices();
+
+            // Re-add them with our modifications.
+            foreach ( $notices as $type => $type_notices ) {
+                foreach ( $type_notices as $notice ) {
+                    $message          = is_array( $notice ) ? $notice['notice'] : $notice;
+                    $modified_message = lc_replace_shop_links_in_notices( $message, $type );
+                    wc_add_notice( $modified_message, $type );
+                }
+            }
+        }
+    }
+}
+
+// Add JavaScript to catch any remaining shop links.
+add_action( 'wp_footer', 'lc_add_shop_link_interceptor' );
+
+/**
+ * Add JavaScript to intercept shop links and redirect to homepage.
+ */
+function lc_add_shop_link_interceptor() {
+    if ( is_checkout() || is_cart() ) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all links that point to /shop/ and redirect them to homepage
+            var shopLinks = document.querySelectorAll('a[href*="/shop/"], a[href$="/shop"]');
+            shopLinks.forEach(function(link) {
+                link.href = '/';
+            });
+            
+            // Also update any text that says "Return to shop"
+            var notices = document.querySelectorAll('.woocommerce-message, .woocommerce-error, .woocommerce-info');
+            notices.forEach(function(notice) {
+                if (notice.innerHTML.includes('Return to shop')) {
+                    notice.innerHTML = notice.innerHTML.replace(/Return to shop/g, 'Return to homepage');
+                }
+                if (notice.innerHTML.includes('/shop/')) {
+                    notice.innerHTML = notice.innerHTML.replace(/\/shop\//g, '/');
+                }
+            });
+        });
+        </script>
+        <?php
+    }
 }

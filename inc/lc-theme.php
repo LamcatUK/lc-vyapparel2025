@@ -297,10 +297,10 @@ function lc_add_founder_number_checkout() {
     if ( ! wp_verify_nonce( $_POST['vy_num_nonce'] ?? '', 'vy_num_action' ) ) {
         wp_send_json_error( 'Security check failed' );
     }
-    
-    $vy_num = sanitize_text_field( $_POST['vy_num'] ?? '' );
+
+    $vy_num     = sanitize_text_field( $_POST['vy_num'] ?? '' );
     $product_id = intval( $_POST['product_id'] ?? 0 );
-    
+
     if ( empty( $vy_num ) || empty( $product_id ) ) {
         wp_send_json_error( 'Invalid data' );
     }
@@ -311,28 +311,33 @@ function lc_add_founder_number_checkout() {
             wp_send_json_error( 'This number is already in your cart' );
         }
     }
-    
+
     // Temporarily set POST data for VY Numbers plugin to process.
-    $original_post = $_POST;
-    $_POST['vy_num'] = $vy_num;
+    $original_post         = $_POST;
+    $_POST['vy_num']       = $vy_num;
     $_POST['vy_num_nonce'] = $original_post['vy_num_nonce'];
-    
+
     // Use WooCommerce's add to cart with proper cart item data that includes vy_num.
-    $cart_item_data = array( 'vy_num' => $vy_num, 'unique_key' => 'founder_' . $vy_num );
-    
+    $cart_item_data = array(
+        'vy_num'     => $vy_num,
+        'unique_key' => 'founder_' . $vy_num,
+    );
+
     // This should trigger the VY Numbers validation hooks.
     $result = WC()->cart->add_to_cart( $product_id, 1, 0, array(), $cart_item_data );
-    
+
     // Restore original POST data.
     $_POST = $original_post;
-    
+
     if ( $result ) {
-        wp_send_json_success( array( 
-            'message' => 'Number added successfully',
-        ) );
+        wp_send_json_success(
+            array(
+                'message' => 'Number added successfully',
+            )
+        );
     } else {
         // Get WooCommerce error messages.
-        $notices = wc_get_notices( 'error' );
+        $notices       = wc_get_notices( 'error' );
         $error_message = ! empty( $notices ) ? $notices[0]['notice'] : 'Failed to add number to cart';
         wc_clear_notices();
         wp_send_json_error( $error_message );
@@ -349,21 +354,23 @@ function lc_remove_founder_number() {
     if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'woocommerce-cart' ) ) {
         wp_send_json_error( 'Security check failed' );
     }
-    
+
     $cart_item_key = sanitize_text_field( $_POST['cart_item_key'] ?? '' );
-    
+
     if ( empty( $cart_item_key ) ) {
         wp_send_json_error( 'Invalid cart item' );
     }
-    
+
     // Remove from cart.
     $removed = WC()->cart->remove_cart_item( $cart_item_key );
-    
+
     if ( $removed ) {
-        wp_send_json_success( array( 
-            'message' => 'Founder number removed successfully',
-            'reload' => true,
-        ) );
+        wp_send_json_success(
+            array(
+                'message' => 'Founder number removed successfully',
+                'reload'  => true,
+            )
+        );
     } else {
         wp_send_json_error( 'Failed to remove founder number' );
     }
@@ -390,7 +397,7 @@ function lc_filter_vy_founder_notices( $notices ) {
     if ( ! is_array( $notices ) ) {
         return $notices;
     }
-    
+
     foreach ( $notices as $type => $type_notices ) {
         if ( is_array( $type_notices ) ) {
             foreach ( $type_notices as $key => $notice ) {
@@ -401,7 +408,7 @@ function lc_filter_vy_founder_notices( $notices ) {
             }
         }
     }
-    
+
     return $notices;
 }
 
@@ -415,7 +422,7 @@ function lc_filter_vy_founder_notices( $notices ) {
  */
 function lc_suppress_all_vy_founder_messages( $message, $products, $show_qty ) {
     unset( $show_qty );
-    
+
     if ( is_array( $products ) ) {
         foreach ( $products as $product_id => $quantity ) {
             if ( 134 === (int) $product_id ) {
@@ -423,7 +430,7 @@ function lc_suppress_all_vy_founder_messages( $message, $products, $show_qty ) {
             }
         }
     }
-    
+
     return $message;
 }
 

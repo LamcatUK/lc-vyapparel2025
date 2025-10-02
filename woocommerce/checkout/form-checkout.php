@@ -86,9 +86,9 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		do_action( 'woocommerce_checkout_billing' );
 
 		// if you don’t ship, you can hide this with a filter; leaving here for the screenshot layout.
-		// do_action( 'woocommerce_checkout_shipping' );
+		// do_action( 'woocommerce_checkout_shipping' );.
 
-		
+
 		$rows = get_field( 'messages', 'option' );
 		if ( is_array( $rows ) ) {
 			$total        = count( $rows );
@@ -105,15 +105,14 @@ foreach ( WC()->cart->get_cart() as $item ) {
 				<?php
 			}
 		}
-		?>
-				<?php
+
 		if ( $vy_nums ) {
 			?>
 		<div class="mt-4 mb-4" data-aos="fade" data-aos-duration="1000">
 			<div class="u-subtitle text-center">Want to secure additional numbers?</div>
 			<?php echo do_shortcode( '[vy_number_picker product_id="134" button_text="Add Another Number"]' ); ?>
 		</div>
-		<?php
+			<?php
 		}
 		?>
 		</div>

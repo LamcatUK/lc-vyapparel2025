@@ -23,7 +23,16 @@ if ( session_status() === PHP_SESSION_NONE ) {
         charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1">
     <link rel="preload"
-        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/barlow-v12-latin-600.woff2' ); ?>"
+        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/AvenirBook.woff2' ); ?>"
+        as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload"
+        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/AvenirLight.woff2' ); ?>"
+        as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload"
+        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/GothamLight.woff2' ); ?>"
+        as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload"
+        href="<?= esc_url( get_stylesheet_directory_uri() . '/fonts/GothamBold.woff2' ); ?>"
         as="font" type="font/woff2" crossorigin="anonymous">
     <?php
     if ( ! is_user_logged_in() ) {
