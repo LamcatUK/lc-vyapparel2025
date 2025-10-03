@@ -73,12 +73,12 @@
 <body <?php body_class(); ?>>
 
 <div class="page">
-	<img src="/wp-content/uploads/2025/06/VY-landing-page.jpg" class="cover" alt="Background">
+	<img src="/wp-content/uploads/2025/10/VY-landing-page.jpg" class="cover" alt="Background">
 	<div class="overlay"></div>
 	<div class="page__inner">
-		<img src="/wp-content/uploads/2025/06/vy-logo.png" class="logo" alt="VY">
-		<img src="/wp-content/uploads/2025/06/vy-visualise.png" class="visualise" alt="Visualize Yourself">
-		<img src="/wp-content/uploads/2025/06/vy-coming.png" class="coming" alt="Coming Soon">
+		<img src="/wp-content/uploads/2025/10/vy-logo.png" class="logo" alt="VY">
+		<img src="/wp-content/uploads/2025/10/vy-visualise.png" class="visualise" alt="Visualize Yourself">
+		<img src="/wp-content/uploads/2025/10/vy-coming.png" class="coming" alt="Coming Soon">
 	</div>
 </div>
 
