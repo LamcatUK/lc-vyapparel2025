@@ -186,6 +186,27 @@
             "append": ""
         },
         {
+            "key": "field_68df959e95b06",
+            "label": "GA Property",
+            "name": "ga_property",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_68b2fb9184e88",
             "label": "MC4WP Form ID",
             "name": "mc4wp_form_id",
@@ -293,5 +314,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1758043370
+    "modified": 1759483305
 }
