@@ -83,7 +83,7 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
             if ( ! empty( $claim['intro_copy'] ) ) {
                 ?>
                 <p class="u-body-lg">
-                    <?= wp_kses_post( $claim['intro_copy'] ); ?>
+                    <?= $claim['intro_copy']; ?>
                 </p>
                 <?php
             }
