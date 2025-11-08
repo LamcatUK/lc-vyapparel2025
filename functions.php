@@ -13,12 +13,8 @@ define( 'LC_THEME_DIR', WP_CONTENT_DIR . '/themes/lc-vyapparel2025' );
 require_once LC_THEME_DIR . '/inc/lc-theme.php';
 
 
-// Force WooCommerce to use classic checkout.
-add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
-
-// Note: Stripe Payment Request Buttons (Apple Pay/Google Pay) are enabled.
-// The payment request button can appear on product pages and checkout if configured in
-// WooCommerce > Settings > Payments > Stripe > Payment Request Buttons.
+// Enable WooCommerce block checkout for better payment method support (Apple Pay/Google Pay).
+// add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
 
 
 /**
