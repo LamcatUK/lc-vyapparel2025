@@ -9,8 +9,11 @@ defined( 'ABSPATH' ) || exit;
 
 add_filter( 'woocommerce_checkout_fields', 'customize_billing_fields' );
 
-// Enable block checkout for better payment method support (Apple Pay/Google Pay).
-// add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+
+// Enable Stripe Payment Request Buttons (Apple Pay/Google Pay).
+// Configure in WP Admin > WooCommerce > Settings > Payments > Stripe.
+// Look for "Payment Request Buttons" section and enable for checkout.
 
 add_filter(
     'woocommerce_order_item_name',

@@ -13,8 +13,8 @@ define( 'LC_THEME_DIR', WP_CONTENT_DIR . '/themes/lc-vyapparel2025' );
 require_once LC_THEME_DIR . '/inc/lc-theme.php';
 
 
-// Enable WooCommerce block checkout for better payment method support (Apple Pay/Google Pay).
-// add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+// Force WooCommerce to use classic checkout.
+add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
 
 
 /**
