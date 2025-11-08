@@ -115,7 +115,7 @@ foreach ( WC()->cart->get_cart() as $item ) {
 			<?php
 		}
 		?>
-		</div>
+		
 		<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
 		<div class="vy-checkout__col vy-checkout__col--right" id="order_review">
 			<!-- <h2 class="vy-checkout__heading">Order summary</h2> -->
