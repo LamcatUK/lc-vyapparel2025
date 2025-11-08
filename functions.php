@@ -16,16 +16,9 @@ require_once LC_THEME_DIR . '/inc/lc-theme.php';
 // Force WooCommerce to use classic checkout.
 add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
 
-// Prevent Stripe's block integration script from loading (classic only).
-add_action(
-	'enqueue_block_assets',
-	function () {
-		if ( is_checkout() ) {
-			wp_dequeue_script( 'wc-stripe-blocks-integration' );
-		}
-	},
-	20
-);
+// Note: Stripe Payment Request Buttons (Apple Pay/Google Pay) are enabled.
+// The payment request button can appear on product pages and checkout if configured in
+// WooCommerce > Settings > Payments > Stripe > Payment Request Buttons.
 
 
 /**

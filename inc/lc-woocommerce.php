@@ -9,21 +9,10 @@ defined( 'ABSPATH' ) || exit;
 
 add_filter( 'woocommerce_checkout_fields', 'customize_billing_fields' );
 
-add_filter( 'woocommerce_checkout_fields', 'customize_billing_fields' );
-
 add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
 
-// Disable WooCommerce Blocks scripts so gateways don't try to hook into them.
-add_action(
-    'enqueue_block_assets',
-    function () {
-        if ( is_checkout() ) {
-            wp_dequeue_script( 'wc-stripe-blocks-integration' );
-            wp_dequeue_script( 'wc-checkout-blocks' );
-        }
-    },
-    20
-);
+// Note: Stripe Payment Request Buttons (Apple Pay/Google Pay) are enabled.
+// Configure in WooCommerce > Settings > Payments > Stripe > Payment Request Buttons.
 
 add_filter(
     'woocommerce_order_item_name',
