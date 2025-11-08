@@ -120,6 +120,10 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		<div class="vy-checkout__col vy-checkout__col--right" id="order_review">
 			<!-- <h2 class="vy-checkout__heading">Order summary</h2> -->
 			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+			
+			<!-- Stripe Payment Request Button (Apple Pay/Google Pay) will appear here -->
+			<?php do_action( 'woocommerce_review_order_before_payment' ); ?>
+			
 			<div class="woocommerce-checkout-review-order">
 				<?php do_action( 'woocommerce_checkout_order_review' ); ?>
 			</div>
