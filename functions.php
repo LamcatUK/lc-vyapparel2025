@@ -13,8 +13,12 @@ define( 'LC_THEME_DIR', WP_CONTENT_DIR . '/themes/lc-vyapparel2025' );
 require_once LC_THEME_DIR . '/inc/lc-theme.php';
 
 
-// Force WooCommerce to use classic checkout.
-add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+// Previously forced WooCommerce to use classic checkout which prevents
+// block-based/payment-request integrations (Stripe UPE). Allow WooCommerce
+// to decide which checkout to use so plugins can register their blocks and
+// payment request buttons. If you need to force classic checkout again,
+// re-enable this filter or scope it behind a theme option.
+// add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
 
 
 /**

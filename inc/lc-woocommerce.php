@@ -9,7 +9,12 @@ defined( 'ABSPATH' ) || exit;
 
 add_filter( 'woocommerce_checkout_fields', 'customize_billing_fields' );
 
-add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
+// Previously forced classic checkout which can prevent block-based
+// integrations (for example Stripe UPE / Payment Request Buttons).
+// Allow WooCommerce to choose the appropriate checkout UI so plugins
+// can register their blocks and scripts. Re-enable the filter only if
+// you intentionally want to disable block checkout.
+// add_filter( 'woocommerce_checkout_is_block_checkout', '__return_false' );
 
 // Enable Stripe Payment Request Buttons (Apple Pay/Google Pay).
 // Configure in WP Admin > WooCommerce > Settings > Payments > Stripe.
