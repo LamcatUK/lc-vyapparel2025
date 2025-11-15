@@ -489,3 +489,58 @@ function lc_add_founder_remove_js() {
     }
 }
 add_action( 'wp_footer', 'lc_add_founder_remove_js' );
+
+
+/**
+ * Ensure any external scripts can reliably find the checkout form.
+ *
+ * Some third-party scripts query the DOM early and log "Found regular form: null"
+ * when the checkout form hasn't been mounted yet. This small watcher exposes
+ * the form on window.vy_regular_form and dispatches a custom event
+ * `vy:checkout-ready` when the form is available.
+ */
+function lc_vy_checkout_form_watcher() {
+    if ( ! is_checkout() ) {
+        return;
+    }
+    ?>
+    <script>
+    (function(){
+        'use strict';
+
+        function exposeForm(el) {
+            try {
+                window.vy_regular_form = el;
+                var ev = new Event('vy:checkout-ready');
+                window.dispatchEvent(ev);
+                // make it easy to find by id as well
+                if (!el.id) el.id = 'vy-regular-form';
+            } catch (e) {
+                // ignore
+            }
+        }
+
+        var found = document.querySelector('form.checkout, form[name="checkout"]');
+        if (found) {
+            exposeForm(found);
+            return;
+        }
+
+        // Watch for late-mounting checkouts (blocks/plugins may inject DOM later).
+        var observer = new MutationObserver(function(mutations, obs) {
+            var f = document.querySelector('form.checkout, form[name="checkout"]');
+            if (f) {
+                exposeForm(f);
+                obs.disconnect();
+            }
+        });
+
+        observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+
+        // Timeout fallback: stop observing after 10s.
+        setTimeout(function(){ observer.disconnect(); }, 10000);
+    })();
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'lc_vy_checkout_form_watcher', 5 );
