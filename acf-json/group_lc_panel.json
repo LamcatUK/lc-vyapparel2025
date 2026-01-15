@@ -195,7 +195,8 @@
                 "claim": "Claim",
                 "coded_legacy": "Coded Legacy",
                 "long_copy": "Long Copy",
-                "merch": "Merchandise"
+                "merch": "Merchandise",
+                "products": "Products"
             },
             "default_value": false,
             "return_format": "value",
@@ -892,6 +893,82 @@
             "min": "",
             "max": "",
             "button_label": "Add Row"
+        },
+        {
+            "key": "field_696807bf67a97",
+            "label": "Products",
+            "name": "products",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68a99749618eb",
+                        "operator": "==",
+                        "value": "products"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_696807ca67a98",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_696807d467a99",
+                    "label": "Product IDs",
+                    "name": "product_ids",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "product"
+                    ],
+                    "post_status": [
+                        "publish"
+                    ],
+                    "taxonomy": "",
+                    "return_format": "id",
+                    "multiple": 1,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "bidirectional": 0,
+                    "ui": 1,
+                    "bidirectional_target": []
+                }
+            ]
         }
     ],
     "location": [
@@ -912,5 +989,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756401523
+    "modified": 1768425479
 }

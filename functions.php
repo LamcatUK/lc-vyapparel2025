@@ -105,3 +105,74 @@ function understrap_child_customize_controls_js() {
 	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'understrap_child_customize_controls_js' );
+
+
+/**
+ * Completely disable Stripe Express Checkout (Apple Pay, Google Pay, etc.) on product pages.
+ * All purchases must go through the cart.
+ */
+
+// Disable payment request buttons on product pages at the earliest possible point.
+add_action( 'init', function() {
+	if ( class_exists( 'WC_Stripe_Payment_Request' ) ) {
+		remove_action( 'woocommerce_after_add_to_cart_form', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
+	}
+}, 1 );
+
+add_action( 'wp', function() {
+	if ( ! is_product() ) {
+		return;
+	}
+	
+	// Remove all Stripe payment request hooks.
+	remove_all_actions( 'woocommerce_after_add_to_cart_form', 1 );
+	remove_all_actions( 'woocommerce_after_add_to_cart_button', 1 );
+}, 1 );
+
+// Start output buffering on product pages to strip Stripe buttons from HTML.
+add_action( 'template_redirect', function() {
+	if ( is_product() ) {
+		ob_start( function( $buffer ) {
+			// Remove Stripe payment request button HTML.
+			$patterns = array(
+				'/<div[^>]*id=["\']wc-stripe-payment-request-wrapper["\'][^>]*>.*?<\/div>/is',
+				'/<div[^>]*class=["\'][^"\']*wc-stripe-payment-request[^"\']*["\'][^>]*>.*?<\/div>/is',
+				'/<div[^>]*id=["\']payment-request-button["\'][^>]*>.*?<\/div>/is',
+				'/<div[^>]*class=["\'][^"\']*payment-request-button[^"\']*["\'][^>]*>.*?<\/div>/is',
+			);
+			
+			foreach ( $patterns as $pattern ) {
+				$buffer = preg_replace( $pattern, '', $buffer );
+			}
+			
+			return $buffer;
+		} );
+	}
+}, 1 );
+
+// Flush output buffer.
+add_action( 'shutdown', function() {
+	if ( is_product() && ob_get_level() > 0 ) {
+		ob_end_flush();
+	}
+}, 999 );
+
+// Disable via filters.
+add_filter( 'wc_stripe_payment_request_button_locations', function( $locations ) {
+	if ( is_product() ) {
+		return array();
+	}
+	return $locations;
+}, 1 );
+
+add_filter( 'wc_stripe_show_payment_request_on_product', '__return_false', 1 );
+add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true', 1 );
+
+// Dequeue scripts.
+add_action( 'wp_enqueue_scripts', function() {
+	if ( is_product() ) {
+		wp_dequeue_script( 'wc-stripe-payment-request' );
+		wp_dequeue_script( 'stripe' );
+		wp_deregister_script( 'wc-stripe-payment-request' );
+	}
+}, 999 );

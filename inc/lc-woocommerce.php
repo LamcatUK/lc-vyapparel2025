@@ -53,6 +53,7 @@ add_filter(
  */
 function customize_billing_fields( $fields ) {
     $vy_num = '';
+    $has_founder_number = false;
 
     if ( function_exists( 'WC' ) && ! is_admin() && is_checkout() ) {
         $cart = WC()->cart;
@@ -61,6 +62,7 @@ function customize_billing_fields( $fields ) {
             foreach ( $cart->get_cart() as $item ) {
                 if ( ! empty( $item['vy_num'] ) ) {
                     $vy_nums[] = $item['vy_num'];
+                    $has_founder_number = true;
                 }
             }
         }
@@ -82,27 +84,32 @@ function customize_billing_fields( $fields ) {
         'custom_html' => '<p class="form-row form-heading mt-4">' . esc_html( 'Address:' ) . '</p>',
     );
 
-	$fields['billing']['section_label_optional'] = array(
-        'type'        => 'html',
-        'label'       => '',
-		'class'       => array( 'col-12' ),
-        'priority'    => 99,
-        'custom_html' => '<p class="form-row form-heading mt-4">' . esc_html( 'Optional Information:' ) . '</p>',
-    );
-
-	if ( ! empty( $vy_nums ) ) {
-		$founder_numbers_html = '<h3 class="form-row mt-4 text-center">Founder Numbers: ' . esc_html( implode( ', ', $vy_nums ) ) . '</h3>';
-	} else {
-		$founder_numbers_html = '<h3 class="form-row mt-4 text-center">No Founder Numbers Selected</h3>';
+	// Only show optional section and custom fields for founder number purchases.
+	if ( $has_founder_number ) {
+		$fields['billing']['section_label_optional'] = array(
+			'type'        => 'html',
+			'label'       => '',
+			'class'       => array( 'col-12' ),
+			'priority'    => 99,
+			'custom_html' => '<p class="form-row form-heading mt-4">' . esc_html( 'Optional Information:' ) . '</p>',
+		);
 	}
 
-	$fields['billing']['section_label_founder'] = array(
-        'type'        => 'html',
-        'label'       => '',
-		'class'       => array( 'col-12' ),
-        'priority'    => 110,
-        'custom_html' => $founder_numbers_html,
-    );
+	if ( $has_founder_number ) {
+		if ( ! empty( $vy_nums ) ) {
+			$founder_numbers_html = '<h3 class="form-row mt-4 text-center">Founder Numbers: ' . esc_html( implode( ', ', $vy_nums ) ) . '</h3>';
+		} else {
+			$founder_numbers_html = '<h3 class="form-row mt-4 text-center">No Founder Numbers Selected</h3>';
+		}
+
+		$fields['billing']['section_label_founder'] = array(
+			'type'        => 'html',
+			'label'       => '',
+			'class'       => array( 'col-12' ),
+			'priority'    => 110,
+			'custom_html' => $founder_numbers_html,
+		);
+	}
 
     // Modify existing fields.
     $fields['billing']['billing_first_name']['class']       = array( 'form-group', 'col-md-6' );
@@ -128,55 +135,57 @@ function customize_billing_fields( $fields ) {
     $fields['billing']['billing_postcode']['label']         = '';
     $fields['billing']['billing_postcode']['placeholder']   = 'ZIP';
 
-    // Add custom fields.
-    $fields['billing']['billing_dob']    = array(
-        'type'        => 'text',
-        'label'       => 'Date of Birth',
-        'placeholder' => '01/23/1990',
-        'required'    => false,
-        'class'       => array( 'col-md-4' ),
-        'priority'    => 100,
-    );
-    $fields['billing']['billing_sex']    = array(
-        'type'        => 'select',
-        'label'       => 'Male or Female',
-		'options'     => array(
-			''       => 'Select an option...',
-			'male'   => 'Male',
-			'female' => 'Female',
-			'other'  => 'Prefer not to say',
-		),
-        'placeholder' => '',
-        'default'     => '',
-        'required'    => false,
-        'class'       => array( 'col-md-4' ),
-        'priority'    => 101,
-    );
-    $fields['billing']['billing_size']   = array(
-        'type'        => 'select',
-        'label'       => 'Apparel Size',
-		'options'     => array(
-			''        => 'Select an option...',
-			'xsmall'  => 'XS',
-			'small'   => 'S',
-			'medium'  => 'M',
-			'large'   => 'L',
-			'xlarge'  => 'XL',
-			'xxlarge' => 'XXL',
-		),
-        'placeholder' => '',
-        'required'    => false,
-        'class'       => array( 'col-md-4' ),
-        'priority'    => 102,
-    );
-    $fields['billing']['billing_social'] = array(
-        'type'        => 'text',
-        'label'       => 'Social Handles',
-        'placeholder' => 'Instagram Preferred - (Optional but adds verification + future whitelist/promo power)',
-        'required'    => false,
-        'class'       => array( 'col-12' ),
-        'priority'    => 103,
-    );
+    // Add custom fields only for founder number purchases.
+    if ( $has_founder_number ) {
+		$fields['billing']['billing_dob']    = array(
+			'type'        => 'text',
+			'label'       => 'Date of Birth',
+			'placeholder' => '01/23/1990',
+			'required'    => false,
+			'class'       => array( 'col-md-4' ),
+			'priority'    => 100,
+		);
+		$fields['billing']['billing_sex']    = array(
+			'type'        => 'select',
+			'label'       => 'Male or Female',
+			'options'     => array(
+				''       => 'Select an option...',
+				'male'   => 'Male',
+				'female' => 'Female',
+				'other'  => 'Prefer not to say',
+			),
+			'placeholder' => '',
+			'default'     => '',
+			'required'    => false,
+			'class'       => array( 'col-md-4' ),
+			'priority'    => 101,
+		);
+		$fields['billing']['billing_size']   = array(
+			'type'        => 'select',
+			'label'       => 'Apparel Size',
+			'options'     => array(
+				''        => 'Select an option...',
+				'xsmall'  => 'XS',
+				'small'   => 'S',
+				'medium'  => 'M',
+				'large'   => 'L',
+				'xlarge'  => 'XL',
+				'xxlarge' => 'XXL',
+			),
+			'placeholder' => '',
+			'required'    => false,
+			'class'       => array( 'col-md-4' ),
+			'priority'    => 102,
+		);
+		$fields['billing']['billing_social'] = array(
+			'type'        => 'text',
+			'label'       => 'Social Handles',
+			'placeholder' => 'Instagram Preferred - (Optional but adds verification + future whitelist/promo power)',
+			'required'    => false,
+			'class'       => array( 'col-12' ),
+			'priority'    => 103,
+		);
+	}
 
     $fields['billing']['billing_founder_hidden'] = array(
         'type'    => 'hidden',
@@ -313,10 +322,10 @@ add_filter( 'woocommerce_add_notice', 'lc_replace_shop_links_in_notices', 10, 2 
  * Replace shop links in WooCommerce notices with homepage links.
  *
  * @param string $message The notice message.
- * @param string $type    The notice type.
+ * @param string $type    The notice type (optional).
  * @return string Modified message.
  */
-function lc_replace_shop_links_in_notices( $message, $type ) {
+function lc_replace_shop_links_in_notices( $message, $type = '' ) {
     // Suppress unused parameter warning.
     unset( $type );
 

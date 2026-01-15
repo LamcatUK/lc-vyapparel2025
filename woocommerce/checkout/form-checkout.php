@@ -22,11 +22,21 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 // read founder numbers from cart (if present).
 $vy_nums = array();
+$has_founder_number = false;
+$has_merchandise = false;
+
 foreach ( WC()->cart->get_cart() as $item ) {
     if ( ! empty( $item['vy_num'] ) ) {
         $vy_nums[] = $item['vy_num'];
+        $has_founder_number = true;
+    } else {
+        $has_merchandise = true;
     }
 }
+
+// Determine checkout type
+$is_founder_checkout = $has_founder_number && ! $has_merchandise;
+$is_merchandise_checkout = $has_merchandise && ! $has_founder_number;
 ?>
 <style>
 .vy-pay-hero__number {
@@ -37,6 +47,7 @@ foreach ( WC()->cart->get_cart() as $item ) {
 }
 </style>
 
+<?php if ( $is_founder_checkout ) : ?>
 <section class="lc-panel vy-pay-hero" style="--bg:url(<?= esc_url( get_stylesheet_directory_uri() . '/img/vy-pay-hero.jpg' ); ?>);" role="region" aria-label="Hero panel">
   	<div class="container text-center">
 		<h1 class="u-display--light text-uppercase">Welcome to the future of <span>luxury</span></h1>
@@ -76,20 +87,33 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		</a>
 	</div>
 </section>
-<section class="container py-5" id="payment">
-	<form name="checkout" method="post" class="checkout woocommerce-checkout vy-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+<?php endif; ?>
 
-	<div class="vy-checkout__grid">
+<?php if ( $is_merchandise_checkout ) : ?>
+<section class="container py-5 mt-5">
+	<h1 class="text-center mb-4">Checkout</h1>
+	<p class="text-center mb-5">Complete your order below</p>
+</section>
+<?php endif; ?>
+
+<section class="container py-5" id="payment">
+	<form name="checkout" method="post" class="checkout woocommerce-checkout <?= $is_founder_checkout ? 'vy-checkout' : '' ?>" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+
+	<div class="<?= $is_founder_checkout ? 'vy-checkout__grid' : 'row' ?>">
+		<?php if ( $is_founder_checkout ) : ?>
 		<div class="u-body-lg text-center w-md-50 mx-auto mb-5">To authenticate, prevent fraud, and set up future resale capabilities, please provide the following information:</div>
+		<?php endif; ?>
 		<?php
-		// billing fields (we’ve pruned + reordered via filter below).
+		// billing fields (we've pruned + reordered via filter below).
 		do_action( 'woocommerce_checkout_billing' );
 
-		// if you don’t ship, you can hide this with a filter; leaving here for the screenshot layout.
-		// do_action( 'woocommerce_checkout_shipping' );.
+		// Enable shipping for merchandise purchases
+		if ( $is_merchandise_checkout ) {
+			do_action( 'woocommerce_checkout_shipping' );
+		}
 
-
-		$rows = get_field( 'messages', 'option' );
+		if ( $is_founder_checkout ) :
+			$rows = get_field( 'messages', 'option' );
 		if ( is_array( $rows ) ) {
 			$total        = count( $rows );
 			$random_index = wp_rand( 0, $total - 1 );
@@ -114,10 +138,11 @@ foreach ( WC()->cart->get_cart() as $item ) {
 		</div>
 			<?php
 		}
+		endif; // end founder checkout specific content
 		?>
 		
 		<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
-		<div class="vy-checkout__col vy-checkout__col--right" id="order_review">
+		<div class="<?= $is_founder_checkout ? 'vy-checkout__col vy-checkout__col--right' : 'col-md-6' ?>" id="order_review">
 			<!-- <h2 class="vy-checkout__heading">Order summary</h2> -->
 			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 			
