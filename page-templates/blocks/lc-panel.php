@@ -282,7 +282,13 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
 								<?php } ?>
 							</h3>
 							<div class="u-body text-black">
-								<?= wp_kses_post( $product->get_short_description() ); ?>
+							<?php
+							$description = $product->get_short_description();
+							if ( empty( $description ) ) {
+								$description = $product->get_description();
+							}
+							echo wpautop( wp_kses_post( $description ) );
+							?>
 							</div>
 						</div>
 					</a>
