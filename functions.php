@@ -12,6 +12,40 @@ define( 'LC_THEME_DIR', WP_CONTENT_DIR . '/themes/lc-vyapparel2025' );
 
 require_once LC_THEME_DIR . '/inc/lc-theme.php';
 
+/**
+ * Change "Sale!" badge to "PRE-ORDER" on product pages with custom styling.
+ */
+add_filter( 'woocommerce_sale_flash', function( $html, $post, $product ) {
+	return '<span class="onsale" style="background: hsl(0 0% 0%); color: hsl(188 81% 67%); font-size: 1rem; font-weight: bold; border-radius: 50px; padding: 0.5rem 1rem; line-height: 1; min-width: unset; min-height: unset;">PRE-ORDER</span>';
+}, 10, 3 );
+
+/**
+ * Add custom CSS for PRE-ORDER badge.
+ */
+add_action( 'wp_head', function() {
+	echo '<style>.woocommerce span.onsale { min-width: unset !important; min-height: unset !important; }</style>';
+}, 100 );
+
+/**
+ * Remove product category from breadcrumbs on product pages.
+ */
+add_filter( 'woocommerce_get_breadcrumb', function( $crumbs ) {
+	if ( is_product() && ! empty( $crumbs ) ) {
+		// Keep first crumb (Home) and last crumb (Product name)
+		// Remove everything in between (Shop, Categories)
+		if ( count( $crumbs ) > 2 ) {
+			$crumbs = array( $crumbs[0], end( $crumbs ) );
+		}
+	}
+	return $crumbs;
+}, 20 );
+
+/**
+ * Remove product meta (SKU and category) from product pages.
+ */
+add_action( 'wp', function() {
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+}, 10 );
 
 // Previously forced WooCommerce to use classic checkout which prevents
 // block-based/payment-request integrations (Stripe UPE). Allow WooCommerce
