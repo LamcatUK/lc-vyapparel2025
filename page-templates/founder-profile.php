@@ -12,6 +12,11 @@ get_header();
 // Get founder number from query var (set by rewrite rule).
 $founder_number = get_query_var( 'founder_num', '' );
 
+// Start session if not already started.
+if ( ! session_id() && ! headers_sent() ) {
+	session_start();
+}
+
 // Handle logout.
 if ( ! empty( $founder_number ) && isset( $_GET['action'] ) && 'logout' === $_GET['action'] ) {
 	// Clear the session verification
@@ -22,19 +27,32 @@ if ( ! empty( $founder_number ) && isset( $_GET['action'] ) && 'logout' === $_GE
 	exit;
 }
 
-// Handle password verification.
+// Check if already authenticated via session.
 $is_authenticated = false;
-$auth_error       = '';
+if ( isset( $_SESSION['vy_verified_founder_number'] ) && $_SESSION['vy_verified_founder_number'] === $founder_number ) {
+	$is_authenticated = true;
+}
 
-if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) ) {
-	check_admin_referer( 'vy_profile_auth_' . $founder_number );
+// Handle password verification.
+$auth_error = '';
 
-	$password = wp_unslash( $_POST['vy_profile_password'] );
-
-	if ( VY_Numbers_Auth::verify_password( $founder_number, $password ) ) {
-		$is_authenticated = true;
+if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) && ! $is_authenticated ) {
+	// Verify nonce for non-logged-in users using wp_verify_nonce.
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'vy_profile_auth_' . $founder_number ) ) {
+		$auth_error = 'Security check failed. Please try again.';
 	} else {
-		$auth_error = 'Incorrect password.';
+		$password = wp_unslash( $_POST['vy_profile_password'] );
+
+		if ( VY_Numbers_Auth::verify_password( $founder_number, $password ) ) {
+			// Store verification in session.
+			$_SESSION['vy_verified_founder_number'] = $founder_number;
+			$is_authenticated = true;
+			// Redirect to clear POST data.
+			wp_safe_redirect( '/founder/' . $founder_number );
+			exit;
+		} else {
+			$auth_error = 'Incorrect password.';
+		}
 	}
 }
 ?>
