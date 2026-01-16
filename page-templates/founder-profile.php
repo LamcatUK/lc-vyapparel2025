@@ -19,12 +19,10 @@ $founder_number = get_query_var( 'founder_num', '' );
 
 // Handle logout.
 if ( ! empty( $founder_number ) && isset( $_GET['action'] ) && 'logout' === $_GET['action'] ) {
-	// Clear the session verification
-	if ( isset( $_SESSION ) && isset( $_SESSION['vy_verified_founder_number'] ) ) {
-		unset( $_SESSION['vy_verified_founder_number'] );
-	}
-	// Force write session data to disk before redirect.
+	// Completely destroy the session to ensure clean logout.
+	$_SESSION = array();
 	session_write_close();
+	// Start a fresh session.
 	session_start();
 	wp_safe_redirect( '/founder/' . $founder_number );
 	exit;
@@ -46,10 +44,8 @@ if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) && ! $
 		// Store verification in session.
 		$_SESSION['vy_verified_founder_number'] = $founder_number;
 		// Force write session data to disk before redirect.
+		// Don't restart session - let the redirect handle it naturally.
 		session_write_close();
-		// Restart session immediately so it's available for the next request.
-		session_start();
-		$is_authenticated = true;
 		// Redirect to clear POST data.
 		wp_safe_redirect( '/founder/' . $founder_number );
 		exit;
