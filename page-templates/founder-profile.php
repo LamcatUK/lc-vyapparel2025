@@ -7,15 +7,15 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Start session BEFORE any headers are sent.
+if ( ! session_id() && ! headers_sent() ) {
+	session_start();
+}
+
 get_header();
 
 // Get founder number from query var (set by rewrite rule).
 $founder_number = get_query_var( 'founder_num', '' );
-
-// Start session if not already started.
-if ( ! session_id() && ! headers_sent() ) {
-	session_start();
-}
 
 // Handle logout.
 if ( ! empty( $founder_number ) && isset( $_GET['action'] ) && 'logout' === $_GET['action'] ) {
