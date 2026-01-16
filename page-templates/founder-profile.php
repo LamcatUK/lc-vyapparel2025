@@ -41,14 +41,11 @@ if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) && ! $
 	$password = wp_unslash( $_POST['vy_profile_password'] );
 
 	if ( VY_Numbers_Auth::verify_password( $founder_number, $password ) ) {
-		// Store verification in session.
+		// Store verification in session - PHP will auto-save on script end.
 		$_SESSION['vy_verified_founder_number'] = $founder_number;
-		// Force write session data to disk before redirect.
-		// Don't restart session - let the redirect handle it naturally.
-		session_write_close();
-		// Redirect to clear POST data.
-		wp_safe_redirect( '/founder/' . $founder_number );
-		exit;
+		$is_authenticated = true;
+		// Don't redirect - just show the profile immediately.
+		// This avoids session persistence issues with redirects.
 	} else {
 		$auth_error = 'Incorrect password.';
 	}
