@@ -23,6 +23,9 @@ if ( ! empty( $founder_number ) && isset( $_GET['action'] ) && 'logout' === $_GE
 	if ( isset( $_SESSION ) && isset( $_SESSION['vy_verified_founder_number'] ) ) {
 		unset( $_SESSION['vy_verified_founder_number'] );
 	}
+	// Force write session data to disk before redirect.
+	session_write_close();
+	session_start();
 	wp_safe_redirect( '/founder/' . $founder_number );
 	exit;
 }
