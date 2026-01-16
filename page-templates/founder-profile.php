@@ -53,19 +53,6 @@ if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) && ! $
 ?>
 
 <div class="container py-5">
-	<!-- DEBUG INFO (REMOVE BEFORE PRODUCTION) -->
-	<div style="background: #f0f0f0; border: 2px solid #333; padding: 1rem; margin-bottom: 2rem; font-family: monospace; font-size: 0.875rem;">
-		<h3 style="margin: 0 0 1rem 0;">🔍 Debug Info</h3>
-		<div><strong>Session ID:</strong> <?php echo session_id() ?: 'NO SESSION'; ?></div>
-		<div><strong>Session Started:</strong> <?php echo session_status() === PHP_SESSION_ACTIVE ? 'YES' : 'NO'; ?></div>
-		<div><strong>Founder Number (URL):</strong> <?php echo esc_html( $founder_number ); ?></div>
-		<div><strong>Is Authenticated:</strong> <?php echo $is_authenticated ? 'YES' : 'NO'; ?></div>
-		<div><strong>Session Verified Number:</strong> <?php echo isset( $_SESSION['vy_verified_founder_number'] ) ? esc_html( $_SESSION['vy_verified_founder_number'] ) : 'NOT SET'; ?></div>
-		<div><strong>POST submitted:</strong> <?php echo isset( $_POST['vy_profile_password'] ) ? 'YES' : 'NO'; ?></div>
-		<div><strong>Auth Error:</strong> <?php echo ! empty( $auth_error ) ? esc_html( $auth_error ) : 'none'; ?></div>
-		<div><strong>Full SESSION data:</strong> <pre style="margin: 0.5rem 0 0 0; background: white; padding: 0.5rem;"><?php print_r( $_SESSION ); ?></pre></div>
-	</div>
-	
 	<?php if ( empty( $founder_number ) ) : ?>
 		
 		<!-- No founder number in URL -->
