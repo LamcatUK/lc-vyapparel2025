@@ -37,22 +37,17 @@ if ( isset( $_SESSION['vy_verified_founder_number'] ) && $_SESSION['vy_verified_
 $auth_error = '';
 
 if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) && ! $is_authenticated ) {
-	// Verify nonce for non-logged-in users using wp_verify_nonce.
-	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'vy_profile_auth_' . $founder_number ) ) {
-		$auth_error = 'Security check failed. Please try again.';
-	} else {
-		$password = wp_unslash( $_POST['vy_profile_password'] );
+	$password = wp_unslash( $_POST['vy_profile_password'] );
 
-		if ( VY_Numbers_Auth::verify_password( $founder_number, $password ) ) {
-			// Store verification in session.
-			$_SESSION['vy_verified_founder_number'] = $founder_number;
-			$is_authenticated = true;
-			// Redirect to clear POST data.
-			wp_safe_redirect( '/founder/' . $founder_number );
-			exit;
-		} else {
-			$auth_error = 'Incorrect password.';
-		}
+	if ( VY_Numbers_Auth::verify_password( $founder_number, $password ) ) {
+		// Store verification in session.
+		$_SESSION['vy_verified_founder_number'] = $founder_number;
+		$is_authenticated = true;
+		// Redirect to clear POST data.
+		wp_safe_redirect( '/founder/' . $founder_number );
+		exit;
+	} else {
+		$auth_error = 'Incorrect password.';
 	}
 }
 ?>
@@ -96,7 +91,6 @@ if ( ! empty( $founder_number ) && isset( $_POST['vy_profile_password'] ) && ! $
 				<?php endif; ?>
 
 				<form method="post" action="" style="display: flex; flex-direction: column; gap: 1.5rem;">
-					<?php wp_nonce_field( 'vy_profile_auth_' . $founder_number ); ?>
 					
 					<div>
 						<label for="vy_profile_password" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password</label>
