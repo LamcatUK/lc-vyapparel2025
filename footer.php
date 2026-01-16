@@ -25,10 +25,12 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 
         <div class="colophon fs-400 d-flex justify-content-between align-items-center flex-wrap pt-5">
-            <div>
-                &copy; <?= esc_html( gmdate( 'Y' ) ); ?> VY APPAREL. All rights reserved. |
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                &copy; <?= esc_html( gmdate( 'Y' ) ); ?> VY APPAREL. All rights reserved.
+				<div class="d-flex flex-wrap gap-2">|
 				<a href="/privacy-policy/">Privacy Policy</a> |
 				<a href="/terms-of-use/">Terms of Use</a>
+				</div>
             </div>
 			<div>
 				<?= do_shortcode( '[social_icons class="d-flex justify-content-center gap-3 u-body-lg"]' ); ?>
