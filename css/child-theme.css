@@ -21930,6 +21930,15 @@ ul.flex-list li {
   }
 }
 
+.lc-panel--opener {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.lc-panel--opener .u-button {
+  z-index: 1;
+}
+
 .wp-block-group:not(.alignfull) .container, .wp-block-group:not(.alignfull) .wp-block-group:not(.alignfull) {
   padding-inline: 0;
 }

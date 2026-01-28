@@ -68,7 +68,15 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
 				<p class="u-subtitle"><?= esc_html( $opener['subtitle'] ); ?></p>
 				<?php
 			}
+
 			echo '</div>';
+
+			?>
+
+			<a href="#coded" class="u-button button">
+				Become a VY Black Member Today
+			</a>
+			<?php
 		}
 
 		if ( 'claim' === $variant ) {
