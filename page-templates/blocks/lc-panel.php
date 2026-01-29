@@ -74,7 +74,7 @@ $variant_data = is_string( $variant ) ? get_field( $variant ) : null;
 			?>
 
 			<a href="#coded" class="u-button button">
-				Become a VY Black Member Today
+				Become a VY Elite Member Today
 			</a>
 			<?php
 		}
